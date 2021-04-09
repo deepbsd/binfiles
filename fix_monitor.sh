@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Some monitors don't play nicely with various Linux distros.  One of my monitors has been a
+# repeat offender.  I must manually add the Modeline for that monitor using xrandr, and I
+# keep some notes on how to do that in my binfiles repo
+
 # xrandr --newmode "1920x1080X"  325.08  1920 1944 1976 2056  1080 1083 1088 1098 +hsync +vsync
 
 # xrandr --addmode DisplayPort-1 1920x1080X
