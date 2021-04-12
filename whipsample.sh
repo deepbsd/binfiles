@@ -5,6 +5,8 @@ exitapp(){
         echo "Thanks for playing!"
         exit 0
     else
+        # Note that the 'calling function' is *this* function, because the infobox is
+        # spawned inside parens
         (TERM=ansi whiptail --title "Infobox" --infobox "Okay, sending you back to main menu..." 8 75)
         sleep 5
         mainmenu
@@ -21,6 +23,11 @@ greeter(){
     name=$1
     message=$(echo "Greetings $name!")
     whiptail --msgbox --title "Greetings" "$message" 10 30
+}
+
+showchoices(){
+    choices=$1
+    whiptail --msgbox --title "Your choices are: " "$choices" 10 30
 }
 
 callshowinfo(){
@@ -59,6 +66,17 @@ getname(){
     greeter $name
 }
 
+callchecklist(){
+    # user can select more than one option
+    selections=$(whiptail --title "Sundae Toppings" --checklist \
+        "Choose toppings for your sundae: " 20 78 6 \
+        "nuts"  "nuts1" ON \
+        "whipped cream"  "whipped cream2" ON \
+        "chocolate syrup"  "chocolate syrup3" ON 3>&2 2>&1 1>&3)
+
+    showchoices "$selections"
+}
+
 mainmenu(){
 
     while true; do
@@ -67,12 +85,14 @@ mainmenu(){
             "1"    "inputbox sample"  \
             "2"    "menu sample"      \
             "3"    "infobox sample"   \
+            "4"    "checklist sample"   \
             "X"    "Exit"  3>&2 2>&1 1>&3
         )
         case $choice in 
             "1")    getname ;;
             "2")    choosecolor ;;
             "3")    callshowinfo ;;
+            "4")    callchecklist ;;
             "X")    exitapp ;;
             "*")    echo "Please choose valid option." ;;
         esac
