@@ -27,7 +27,7 @@ greeter(){
 
 showchoices(){
     choices=$1
-    whiptail --msgbox --title "Your choices are: " "$choices" 10 30
+    whiptail --msgbox --title "You chose: " "$choices" 10 30
 }
 
 callshowinfo(){
@@ -69,12 +69,30 @@ getname(){
 callchecklist(){
     # user can select more than one option
     selections=$(whiptail --title "Sundae Toppings" --checklist \
-        "Choose toppings for your sundae: " 20 78 6 \
-        "nuts"  "nuts1" ON \
-        "whipped cream"  "whipped cream2" ON \
-        "chocolate syrup"  "chocolate syrup3" ON 3>&2 2>&1 1>&3)
+        "Choose toppings for your sundae: " 20 38 3 \
+        "nuts"  "" ON \
+        "whipped cream"  "" ON \
+        "chocolate syrup"  "" ON 3>&2 2>&1 1>&3)
 
     showchoices "$selections"
+}
+
+callradiolist(){
+    # user can only select only ONE option
+    selection=$(whiptail --title "Linux Distros" --radiolist \
+        "What is your favorite distro?" 20 78 10 \
+        "Arch Linux" "" OFF \
+        "Ubuntu"  "" OFF \
+        "Linux Mint" "" OFF \
+        "Debian" "" OFF \
+        "Red Hat/Fedora" "" OFF \
+        "OpenSUSE" "" OFF \
+        "Solus" "" OFF \
+        "Antix/MX" "" OFF \
+        "PopOS" "" OFF \
+        "EndeavourOS" "" OFF 3>&2 2>&1 1>&3 )
+
+    showchoices "$selection"
 }
 
 mainmenu(){
@@ -86,6 +104,7 @@ mainmenu(){
             "2"    "menu sample"      \
             "3"    "infobox sample"   \
             "4"    "checklist sample"   \
+            "5"    "radiolist sample"   \
             "X"    "Exit"  3>&2 2>&1 1>&3
         )
         case $choice in 
@@ -93,6 +112,7 @@ mainmenu(){
             "2")    choosecolor ;;
             "3")    callshowinfo ;;
             "4")    callchecklist ;;
+            "5")    callradiolist ;;
             "X")    exitapp ;;
             "*")    echo "Please choose valid option." ;;
         esac
