@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+exitapp(){
+    if (whiptail --title "Yes-No Dialog" --yesno "Ready to exit whipsample?" 8 78); then
+        echo "Thanks for playing!"
+        exit 0
+    else
+        (TERM=ansi whiptail --title "Infobox" --infobox "Okay, sending you back to main menu..." 8 75)
+        sleep 5
+        mainmenu
+    fi
+}
+
 showcolor(){
     color=$1
     message=$(echo "You chose $color") 
@@ -15,6 +26,7 @@ greeter(){
 callshowinfo(){
     showinfo 
     sleep 10 
+    mainmenu
 }
 
 showinfo(){
@@ -61,7 +73,7 @@ mainmenu(){
             "1")    getname ;;
             "2")    choosecolor ;;
             "3")    callshowinfo ;;
-            "X")    echo "Bye for now!" && exit 0 ;;
+            "X")    exitapp ;;
             "*")    echo "Please choose valid option." ;;
         esac
     done
