@@ -133,8 +133,8 @@ mainmenu(){
 
     while true; do
         choice=$(
-        whiptail --title "What shall we do?" --menu "Your choices" 16 80 9 \
-            "I"    "inputbox sample"  \
+        whiptail --backtitle "Whiptail Examples" --title "What shall we do?" --menu "Your choices" 16 80 9 \
+            "I"    "inputbox sample   (with msgbox sample)"  \
             "M"    "menu sample"      \
             "F"    "infobox sample"   \
             "C"    "checklist sample"   \
