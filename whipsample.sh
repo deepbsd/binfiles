@@ -68,11 +68,18 @@ getname(){
 
 callchecklist(){
     # user can select more than one option
-    selections=$(whiptail --title "Sundae Toppings" --checklist \
-        "Choose toppings for your sundae: " 20 38 3 \
-        "nuts"  "" ON \
-        "whipped cream"  "" ON \
-        "chocolate syrup"  "" ON 3>&2 2>&1 1>&3)
+    selections=$(whiptail --title "Linux Distros" --checklist \
+        "What are distros you have tried? " 20 38 10 \
+        "Arch Linux"  "" OFF \
+        "Ubuntu"  "" OFF \
+        "Debian"  "" OFF \
+        "Red Hat/Fedora"  "" OFF \
+        "OpenSuse"  "" OFF \
+        "Solus"  "" OFF \
+        "Antix/MX"  "" OFF \
+        "PopOS"  "" OFF \
+        "EndeavourOS"  "" OFF \
+        "Linux Mint"  "" OFF 3>&2 2>&1 1>&3)
 
     showchoices "$selections"
 }
@@ -80,7 +87,7 @@ callchecklist(){
 callradiolist(){
     # user can only select only ONE option
     selection=$(whiptail --title "Linux Distros" --radiolist \
-        "What is your favorite distro?" 20 78 10 \
+        "What is your favorite distro? (Can only chose ONE)" 20 48 10 \
         "Arch Linux" "" OFF \
         "Ubuntu"  "" OFF \
         "Linux Mint" "" OFF \
@@ -95,26 +102,47 @@ callradiolist(){
     showchoices "$selection"
 }
 
+calltextbox(){
+    info=$(lsb_release -a)
+    host=$(hostname)
+    echo "Welcome to $host running $info!" > ~/tmp/testtxtbox
+    whiptail --textbox ~/tmp/testtxtbox  20 70
+}
+
+callpasswordbox(){
+    secret='rtfm'
+    guessed=$(whiptail --passwordbox "Please enter your password: " 8 75 --title "Password Dialog" 3>&1 1>&2 2>&3)
+    if [[ "$secret" -eq "$guessed" ]]; then
+        showcolor "Yay! You guessed the secret!"
+    else
+        showcolor "Sorry, you did NOT guess the password!"
+    fi
+}
+
 mainmenu(){
 
     while true; do
         choice=$(
         whiptail --title "What shall we do?" --menu "Your choices" 16 80 9 \
-            "1"    "inputbox sample"  \
-            "2"    "menu sample"      \
-            "3"    "infobox sample"   \
-            "4"    "checklist sample"   \
-            "5"    "radiolist sample"   \
-            "X"    "Exit"  3>&2 2>&1 1>&3
+            "I"    "inputbox sample"  \
+            "M"    "menu sample"      \
+            "F"    "infobox sample"   \
+            "C"    "checklist sample"   \
+            "R"    "radiolist sample"   \
+            "T"    "textbox sample"   \
+            "P"    "passwordbox sample"   \
+            "X"    "Exit (Yes/No box)"  3>&2 2>&1 1>&3
         )
         case $choice in 
-            "1")    getname ;;
-            "2")    choosecolor ;;
-            "3")    callshowinfo ;;
-            "4")    callchecklist ;;
-            "5")    callradiolist ;;
+            "I")    getname ;;
+            "M")    choosecolor ;;
+            "F")    callshowinfo ;;
+            "C")    callchecklist ;;
+            "R")    callradiolist ;;
             "X")    exitapp ;;
-            "*")    echo "Please choose valid option." ;;
+            "T")    calltextbox ;;
+            "P")    callpasswordbox ;;
+            "*")    (whiptail --title "Please make valid choice" --msgbox "Please make a valid choice.  Hit OK to continue" 8 75 ) ;;
         esac
     done
 }
