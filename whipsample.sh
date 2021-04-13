@@ -119,6 +119,16 @@ callpasswordbox(){
     fi
 }
 
+callprogressgauge(){
+    { for (( i=0; i<=100; i+=5 )); do
+        sleep 0.5
+        echo $i
+    done
+    } | whiptail --gauge "Please wait..." 6 50 0
+
+    mainmenu
+}
+
 mainmenu(){
 
     while true; do
@@ -131,6 +141,7 @@ mainmenu(){
             "R"    "radiolist sample"   \
             "T"    "textbox sample"   \
             "P"    "passwordbox sample"   \
+            "G"    "progress gauge sample" \
             "X"    "Exit (Yes/No box)"  3>&2 2>&1 1>&3
         )
         case $choice in 
@@ -142,6 +153,7 @@ mainmenu(){
             "X")    exitapp ;;
             "T")    calltextbox ;;
             "P")    callpasswordbox ;;
+            "G")    callprogressgauge ;;
             "*")    (whiptail --title "Please make valid choice" --msgbox "Please make a valid choice.  Hit OK to continue" 8 75 ) ;;
         esac
     done
