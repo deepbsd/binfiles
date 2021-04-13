@@ -112,7 +112,7 @@ calltextbox(){
 callpasswordbox(){
     secret='rtfm'
     guessed=$(whiptail --passwordbox "Please enter your password: " 8 75 --title "Password Dialog" 3>&1 1>&2 2>&3)
-    if [[ "$secret" -eq "$guessed" ]]; then
+    if [[ "$secret" == "$guessed" ]]; then
         showcolor "Yay! You guessed the secret!"
     else
         showcolor "Sorry, you did NOT guess the password!"
