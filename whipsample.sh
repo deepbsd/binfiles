@@ -130,20 +130,23 @@ callprogressgauge(){
 }
 
 beginning(){
-    for n in 0 5 10 20 ; do
+    # total of 15 seconds
+    for n in 0 5 10 20 25 ; do
         echo $n
         sleep 3
     done
 }
 
 middle(){
-    for n in 25 35 45 55 65 ; do
+    # total of 20 seconds
+    for n in 35 45 55 65 ; do
         echo $n
         sleep 3
     done
 }
 
 final(){
+    # total of 15 seconds + 5 seconds
     for n in 77 88 95 98 99; do
         echo $n
         sleep 3
@@ -154,7 +157,7 @@ final(){
 
 calculate(){
     x=1
-    limit=120
+    limit=120  # 2 minute loop
     while [[ $x -lt $limit ]]; do
         date +"%D-->%H:%M:%S::%N" &>>logfile
         echo "X: $x"  &>>logfile
