@@ -129,16 +129,42 @@ callprogressgauge(){
     mainmenu
 }
 
-calculate(){
-    x=1
-    while [[ $x -lt 600 ]]; do
-        x=$((x+1))
-        echo "X: $x"  &>>logfile
+beginning(){
+    for n in 0 5 10 20 ; do
+        echo $n
+        sleep 3
     done
 }
 
-specialprogressgauge(){
+middle(){
+    for n in 25 35 45 55 65 ; do
+        echo $n
+        sleep 3
+    done
+}
 
+final(){
+    for n in 77 88 95 98 99; do
+        echo $n
+        sleep 3
+    done
+    echo 100
+    sleep 5
+}
+
+calculate(){
+    x=1
+    limit=120
+    while [[ $x -lt $limit ]]; do
+        date +"%D-->%H:%M:%S::%N" &>>logfile
+        echo "X: $x"  &>>logfile
+        sleep 1
+        x=$(( x+1 ))
+    done
+    echo "Done" &>>logfile
+}
+
+specialprogressgauge1(){
     calculate &
     thepid=$!
     num=0
@@ -156,6 +182,20 @@ specialprogressgauge(){
         [[ $num -gt 100 ]] && break
         echo $num
     done  | whiptail --title "Progress Gauge" --gauge "Calculating stuff" 6 70 0 
+}
+
+specialprogressgauge(){
+    calculate&
+    thepid=$!
+    while true; do
+        beginning
+        middle
+        sleep 2
+        while $(ps aux | grep -v 'grep' | grep "$thepid" &>/dev/null); do
+            sleep 2
+        done
+        final && break
+    done  | whiptail --title "Progress Gauge" --gauge "Calculating stuff" 6 70 0
 }
 
 mainmenu(){
