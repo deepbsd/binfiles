@@ -148,6 +148,7 @@ showprogress(){
 calculate(){
     num=1
     limit=120  # 2 minute loop
+    ## remove stale logfiles
     [[ -f logfile ]] && rm logfile
     while [[ $num -lt $limit ]]; do
         date +"%D-->%H:%M:%S::%N" &>>logfile
