@@ -146,14 +146,14 @@ showprogress(){
 }
 
 calculate(){
-    start=1
+    num=1
     limit=120  # 2 minute loop
     [[ -f logfile ]] && rm logfile
-    while [[ $start -lt $limit ]]; do
+    while [[ $num -lt $limit ]]; do
         date +"%D-->%H:%M:%S::%N" &>>logfile
-        echo "X: $x"  &>>logfile
+        echo "Num: $num"  &>>logfile
         sleep 1
-        x=$(( x+1 ))
+        num=$(( num+1 ))
     done
     echo "=== Done ===" &>>logfile
 }
@@ -188,7 +188,7 @@ specialprogressgauge(){
         num=66
         while $(ps aux | grep -v 'grep' | grep "$thepid" &>/dev/null); do
             echo $num 
-            if [[ $num -gt 77 ]] ; then $(( num-1 )); fi
+            if [[ $num -gt 77 ]] ; then num=$(( num-1 )); fi
             sleep 5
             num=$(( num+1 ))
         done
