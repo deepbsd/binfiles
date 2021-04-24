@@ -129,11 +129,40 @@ callprogressgauge(){
     mainmenu
 }
 
+calculate(){
+    x=1
+    while [[ $x -lt 600 ]]; do
+        x=$((x+1))
+        echo "X: $x"  &>>logfile
+    done
+}
+
+specialprogressgauge(){
+
+    calculate &
+    thepid=$!
+    num=0
+    echo "thepid: $thepid"
+    while true; do
+        if $(ps aux|grep "$thepid" &>/dev/null); then
+            echo "PID: $thepid" &>>logfile
+            num=$(( num + 1 ))
+            sleep 0.1
+        else
+            num=100
+            sleep 2
+            break
+        fi
+        [[ $num -gt 100 ]] && break
+        echo $num
+    done  | whiptail --title "Progress Gauge" --gauge "Calculating stuff" 6 70 0 
+}
+
 mainmenu(){
 
     while true; do
         choice=$(
-        whiptail --backtitle "Whiptail Examples" --title "What shall we do?" --menu "Your choices" 16 80 9 \
+        whiptail --backtitle "Whiptail Examples" --title "What shall we do?" --menu "Your choices" 22 80 12 \
             "I"    "inputbox sample   (with msgbox sample)"  \
             "M"    "menu sample"      \
             "F"    "infobox sample"   \
@@ -142,6 +171,7 @@ mainmenu(){
             "T"    "textbox sample"   \
             "P"    "passwordbox sample"   \
             "G"    "progress gauge sample" \
+            "S"    "progress gauge 'special'" \
             "X"    "Exit (Yes/No box)"  3>&2 2>&1 1>&3
         )
         case $choice in 
@@ -154,6 +184,7 @@ mainmenu(){
             "T")    calltextbox ;;
             "P")    callpasswordbox ;;
             "G")    callprogressgauge ;;
+            "S")    specialprogressgauge ;;
             "*")    (whiptail --title "Please make valid choice" --msgbox "Please make a valid choice.  Hit OK to continue" 8 75 ) ;;
         esac
     done
