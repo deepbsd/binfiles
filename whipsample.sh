@@ -142,14 +142,14 @@ showprogress(){
         sleep 3
     done
 
-    [[ $a == 'e' ]] && echo 100 && sleep 5
+    [[ $1 == 'e' ]] && echo 100 && sleep 5
 }
 
 calculate(){
-    x=1
+    start=1
     limit=120  # 2 minute loop
     [[ -f logfile ]] && rm logfile
-    while [[ $x -lt $limit ]]; do
+    while [[ $start -lt $limit ]]; do
         date +"%D-->%H:%M:%S::%N" &>>logfile
         echo "X: $x"  &>>logfile
         sleep 1
