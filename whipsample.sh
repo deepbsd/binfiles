@@ -129,42 +129,33 @@ callprogressgauge(){
     mainmenu
 }
 
-beginning(){
-    # total of 15 seconds
-    for n in 0 5 10 20 25 ; do
-        echo $n
-        sleep 3
-    done
-}
+showprogress(){
+    case $1 in
+        'b') arr=( 0 5 10 20 25 ) ;;
+        'm') arr=( 35 45 55 65 ) ;;
+        'e') arr=( 77 88 95 98 99 ) ;;
+          *) arr=()
+    esac
 
-middle(){
-    # total of 20 seconds
-    for n in 35 45 55 65 ; do
+    for n in "${arr[@]}"; do
         echo $n
         sleep 3
     done
-}
 
-final(){
-    # total of 15 seconds + 5 seconds
-    for n in 77 88 95 98 99; do
-        echo $n
-        sleep 3
-    done
-    echo 100
-    sleep 5
+    [[ $a == 'e' ]] && echo 100 && sleep 5
 }
 
 calculate(){
     x=1
     limit=120  # 2 minute loop
+    [[ -f logfile ]] && rm logfile
     while [[ $x -lt $limit ]]; do
         date +"%D-->%H:%M:%S::%N" &>>logfile
         echo "X: $x"  &>>logfile
         sleep 1
         x=$(( x+1 ))
     done
-    echo "Done" &>>logfile
+    echo "=== Done ===" &>>logfile
 }
 
 specialprogressgauge1(){
@@ -191,13 +182,18 @@ specialprogressgauge(){
     calculate&
     thepid=$!
     while true; do
-        beginning
-        middle
+        showprogress 'b'
+        showprogress 'm'
         sleep 2
+        num=66
         while $(ps aux | grep -v 'grep' | grep "$thepid" &>/dev/null); do
-            sleep 2
+            echo $num 
+            if [[ $num -gt 77 ]] ; then $(( num-1 )); fi
+            sleep 5
+            num=$(( num+1 ))
         done
-        final && break
+        showprogress 'e' 
+        break
     done  | whiptail --title "Progress Gauge" --gauge "Calculating stuff" 6 70 0
 }
 
