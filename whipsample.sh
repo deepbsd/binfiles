@@ -145,6 +145,15 @@ showprogress(){
     [[ $1 == 'e' ]] && echo 100 && sleep 5
 }
 
+showprogress1(){
+    start=$1; end=$2
+    pause=1  # how many seconds to wait
+    for n in $(seq $start $end); do
+        echo $n
+        sleep $pause
+    done
+}
+
 calculate(){
     num=1
     limit=120  # 2 minute loop
@@ -183,8 +192,8 @@ specialprogressgauge(){
     calculate&
     thepid=$!
     while true; do
-        showprogress 'b'
-        showprogress 'm'
+        showprogress1 1 27
+        showprogress1 28 64
         sleep 2
         num=66
         while $(ps aux | grep -v 'grep' | grep "$thepid" &>/dev/null); do
@@ -193,7 +202,7 @@ specialprogressgauge(){
             sleep 5
             num=$(( num+1 ))
         done
-        showprogress 'e' 
+        showprogress1 65 100
         break
     done  | whiptail --title "Progress Gauge" --gauge "Calculating stuff" 6 70 0
 }
