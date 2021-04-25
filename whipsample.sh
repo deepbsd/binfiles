@@ -129,6 +129,21 @@ callprogressgauge(){
     mainmenu
 }
 
+calculate(){
+    num=1
+    limit=120  # 2 minute loop
+    ## remove stale logfiles
+    [[ -f logfile ]] && rm logfile
+    while [[ $num -lt $limit ]]; do
+        date +"%D-->%H:%M:%S::%N" &>>logfile
+        echo "Num: $num"  &>>logfile
+        sleep 1
+        num=$(( num+1 ))
+    done
+    echo "=== Done ===" &>>logfile
+}
+
+# Original idea for show progress. 
 showprogress(){
     case $1 in
         'b') arr=( 0 5 10 20 25 ) ;;
@@ -145,20 +160,7 @@ showprogress(){
     [[ $1 == 'e' ]] && echo 100 && sleep 5
 }
 
-calculate(){
-    num=1
-    limit=120  # 2 minute loop
-    ## remove stale logfiles
-    [[ -f logfile ]] && rm logfile
-    while [[ $num -lt $limit ]]; do
-        date +"%D-->%H:%M:%S::%N" &>>logfile
-        echo "Num: $num"  &>>logfile
-        sleep 1
-        num=$(( num+1 ))
-    done
-    echo "=== Done ===" &>>logfile
-}
-
+# Later idea for show progress.  Little better
 showprogress1(){
     start=$1; end=$2
     for n in $(seq $start $end); do
