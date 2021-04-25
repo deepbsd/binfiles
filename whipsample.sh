@@ -145,15 +145,6 @@ showprogress(){
     [[ $1 == 'e' ]] && echo 100 && sleep 5
 }
 
-showprogress1(){
-    start=$1; end=$2
-    pause=1  # how many seconds to wait
-    for n in $(seq $start $end); do
-        echo $n
-        sleep $pause
-    done
-}
-
 calculate(){
     num=1
     limit=120  # 2 minute loop
@@ -166,6 +157,15 @@ calculate(){
         num=$(( num+1 ))
     done
     echo "=== Done ===" &>>logfile
+}
+
+showprogress1(){
+    start=$1; end=$2
+    for n in $(seq $start $end); do
+        echo $n
+        pause=$(shuf -i 1-3 -n 1)  # random wait between 1 and 3 seconds
+        sleep $pause
+    done
 }
 
 specialprogressgauge1(){
