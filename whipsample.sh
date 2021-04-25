@@ -161,6 +161,7 @@ showprogress(){
 }
 
 # Later idea for show progress.  Little better
+# Basically the 2nd parameter IS the length of time in seconds
 showprogress1(){
     start=$1; end=$2
     for n in $(seq $start $end); do
@@ -199,7 +200,7 @@ specialprogressgauge(){
         num=66
         while $(ps aux | grep -v 'grep' | grep "$thepid" &>/dev/null); do
             echo $num 
-            if [[ $num -gt 77 ]] ; then num=$(( num-1 )); fi
+            if [[ $num -gt 77 ]] ; then num=$(( num-3 )); fi
             sleep 5
             num=$(( num+1 ))
         done
