@@ -40,15 +40,15 @@ hoping it will help other people to install Archlinux more easily.
 The trickiest part of whiptail for me has been getting the progress gauge to work.  In case
 anyone else has been having trouble with that, let me share what little wisdom I have
 accrued.  First, the progress gauge has nothing to do whatever with actual progress!  That is
-the most mis-leading part of all this.  The progress gauge function (--gauge) of whiptail
+the most misleading part of all this.  The progress gauge function (--gauge) of whiptail
 simply takes a stream of numbers between 1 and 100 and creates a gauge of that number.  When
-you break out of the loop that geneerates those numbers, the gauge goes away.
+you break out of the loop that generates those numbers, the gauge goes away.
 
 So, there's nothing about the `--gauge` function of whiptail that automatically measures the
 progress of a function.  Nothing whatsoever.  What you're supposed to do is start the process
 that you want to measure the progress of, send that process to the background, and then have
 some way of generating numbers between 1 and 100 that roughly correlate to when your
-background process completes.
+background process starts and completes.
 
 If you look at the source code, you'll see the following.  There's a calculate function that
 simply spends about 2 minutes outputting numbers and timestamps to a logfile.  That's all it
