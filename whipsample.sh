@@ -192,8 +192,7 @@ specialprogressgauge(){
     calculate&
     thepid=$!
     while true; do
-        showprogress1 1 27
-        showprogress1 28 64
+        showprogress1 1 65
         sleep 2
         num=66
         while $(ps aux | grep -v 'grep' | grep "$thepid" &>/dev/null); do
@@ -202,7 +201,7 @@ specialprogressgauge(){
             sleep 5
             num=$(( num+1 ))
         done
-        showprogress1 65 100
+        showprogress1 $num 100
         break
     done  | whiptail --title "Progress Gauge" --gauge "Calculating stuff" 6 70 0
 }
