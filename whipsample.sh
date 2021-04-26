@@ -131,7 +131,7 @@ callprogressgauge(){
 
 calculate(){
     num=1
-    limit=120  # 2 minute loop
+    limit=240  # 2 minute loop
     ## remove stale logfiles
     [[ -f logfile ]] && rm logfile
     while [[ $num -lt $limit ]]; do
@@ -163,10 +163,11 @@ showprogress(){
 # Later idea for show progress.  Little better
 # Basically the 2nd parameter IS the length of time in seconds
 showprogress1(){
-    start=$1; end=$2
+    start=$1; end=$2; shortest=$3; longest=$4
+
     for n in $(seq $start $end); do
         echo $n
-        pause=$(shuf -i 1-3 -n 1)  # random wait between 1 and 3 seconds
+        pause=$(shuf -i ${shortest:=1}-${longest:=3} -n 1)  # random wait between 1 and 3 seconds
         sleep $pause
     done
 }
@@ -175,7 +176,7 @@ specialprogressgauge1(){
     calculate &
     thepid=$!
     num=0
-    echo "thepid: $thepid"
+    echo "thepid: $thepid"  
     while true; do
         if $(ps aux|grep "$thepid" &>/dev/null); then
             echo "PID: $thepid" &>>logfile
@@ -204,7 +205,7 @@ specialprogressgauge(){
             sleep 5
             num=$(( num+1 ))
         done
-        showprogress1 $num 100
+        showprogress1 $num 100 0.1 1
         break
     done  | whiptail --title "Progress Gauge" --gauge "Calculating stuff" 6 70 0
 }
