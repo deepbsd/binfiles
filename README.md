@@ -174,3 +174,54 @@ Another alternative is to find a way to pipe the updating output to a file and d
 via a `--textbox` switch.  That would be the most preferable yet.  Still, I have not found a
 wholly satisfactory solution to this problem.
 
+Here's my latest attempt at providing a solution:
+
+```
+specialprogressgauge(){
+    calculate&
+    thepid=$!
+    while true; do
+        showprogress1 1 65 1 3
+        sleep 2
+        num=66
+        while $(ps aux | grep -v 'grep' | grep "$thepid" &>/dev/null); do
+            echo $num 
+            if [[ $num -gt 95 ]] ; then num=$(( num-1 )); fi
+            #sleep 5
+            showprogress1 $num $((num+1)) 
+            num=$(( num+1 ))
+        done
+        showprogress1 99 100 3 3
+        break
+    done  | whiptail --title "Progress Gauge" --gauge "Calculating stuff" 6 70 0
+}
+
+# Later idea for show progress.  Little better
+# Basically the 2nd parameter IS the length of time in seconds
+showprogress1(){
+    start=$1; end=$2; shortest=$3; longest=$4
+
+    for n in $(seq $start $end); do
+        echo $n
+        pause=$(shuf -i ${shortest:=1}-${longest:=3} -n 1)  # random wait between 1 and 3 seconds
+        sleep $pause
+    done
+}
+
+```
+
+Here, in *specialprogressgauge*, if `num` grows larger than 95 percent while *calculate* is
+running, `num` will go back and forth between 96 and 95 percent for as long as *calculate* is
+running.  Then *showprogress* will get called starting at 99 and go to 100 percent, each step
+taking 3 seconds to display.  So I'm only wasting 6 seconds showing the user that his/her
+process (*calculate*) is complete.  
+
+The advantage of this version of *showprogress* is that I can alter the pause period on the
+fly.  When I want to take up time in the beginning to the middle of the process, I can pass
+longer wait times.  When the process is wrapping up and I want to speed to the finish of the
+progress bar, I can pass in greater range numbers and longer wait times to make sure the user
+sees the last values of the progress bar.  So if the user's hardware is super fast, I can
+speed the progress bar ahead to the end, but if the user's hardware is slow, I can drag out
+the progress bar as long as I need to.  So far, I think this might be my favorite approach
+and solution.
+

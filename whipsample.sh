@@ -131,7 +131,7 @@ callprogressgauge(){
 
 calculate(){
     num=1
-    limit=240  # 2 minute loop
+    limit=40  # 2 minute loop
     ## remove stale logfiles
     [[ -f logfile ]] && rm logfile
     while [[ $num -lt $limit ]]; do
@@ -196,11 +196,11 @@ specialprogressgauge(){
     calculate&
     thepid=$!
     while true; do
-        showprogress1 1 65 1 3
+        showprogress1 1 35 1 3
         sleep 2
         num=66
         while $(ps aux | grep -v 'grep' | grep "$thepid" &>/dev/null); do
-            echo $num 
+            #echo $num 
             if [[ $num -gt 77 ]] ; then num=$(( num-1 )); fi
             #sleep 5
             showprogress1 $num $((num+1)) 
@@ -212,7 +212,7 @@ specialprogressgauge(){
 }
 
 mainmenu(){
-
+    $(which whiptail &>/dev/null) || echo "Oops!  No whiptail in your PATH!  Is whiptail installed?"
     while true; do
         choice=$(
         whiptail --backtitle "Whiptail Examples" --title "What shall we do?" --menu "Your choices" 22 80 12 \
