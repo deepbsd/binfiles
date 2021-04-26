@@ -155,5 +155,22 @@ user while waiting for the `calculate()` function to complete?  Yes, probably so
 the actual purpose of the `--gauge` function in whiptail?  Yes, I think it is.  After all is
 said and done.
 
+## More on whipsample.sh
 
+So I've been thinking more about making one of those progress bars work in a real life
+instance.  I've been thinking of using them in the whiptail version of my Archlinux
+installer, during some of the installation routines, and it's a little tricky.  How do you
+actually measure progress?  Do you just key in a range of time, and let the progress of the
+function determine how much time between updates transpires?  That might be useful.  Or do
+you just let the bar stop at a certain percentage of progress?  I've even created the latest
+alternative where if the background function still isn't complete by 77 percent, the
+percentage bar goes back to 76 percent, and then goes forward and checks again.  If the
+process is not complete, the bar keeps going back and forth between 76 and 77 percent until
+the background process gets removed from the PID table, and then the process quickly
+completes to 100 percent!  This way, the bar always appears to be moving so it never gives
+the impression of being stuck.
+
+Another alternative is to find a way to pipe the updating output to a file and display that
+via a `--textbox` switch.  That would be the most preferable yet.  Still, I have not found a
+wholly satisfactory solution to this problem.
 
