@@ -173,7 +173,8 @@ showprogress1(){
 }
 
 specialprogressgauge1(){
-    calculate &
+    process_to_measure=$1
+    eval "$process_to_measure"&
     thepid=$!
     num=0
     echo "thepid: $thepid"  
