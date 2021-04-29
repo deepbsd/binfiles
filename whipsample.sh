@@ -135,8 +135,8 @@ calculate(){
     ## remove stale logfiles
     [[ -f logfile ]] && rm logfile
     while [[ $num -lt $limit ]]; do
+        echo -n "Num: $num  "  &>>logfile
         date +"%D-->%H:%M:%S::%N" &>>logfile
-        echo "Num: $num"  &>>logfile
         sleep 1
         num=$(( num+1 ))
     done
@@ -174,13 +174,15 @@ showprogress1(){
 
 specialprogressgauge1(){
     process_to_measure=$1
-    eval "$process_to_measure"&
+    message=$2
+    backmessage=$3
+    eval "$process_to_measure" &
     thepid=$!
     num=0
     echo "thepid: $thepid"  
     while true; do
         if $(ps aux|grep "$thepid" &>/dev/null); then
-            echo "PID: $thepid" &>>logfile
+            #echo "PID: $thepid" &>>logfile
             num=$(( num + 1 ))
             sleep 0.1
         else
@@ -190,14 +192,17 @@ specialprogressgauge1(){
         fi
         [[ $num -gt 100 ]] && break
         echo $num
-    done  | whiptail --title "Progress Gauge" --gauge "Calculating stuff" 6 70 0 
+    done  | whiptail --backtitle "$backmessage"  --title "Progress Gauge" --gauge "$message" 6 70 0 
 }
 
 specialprogressgauge(){
-    calculate&
+    process_to_measure=$1
+    message=$2
+    backmessage=$3
+    eval $process_to_measure &
     thepid=$!
     while true; do
-        showprogress1 1 35 1 3
+        showprogress1 1 25 1 3
         sleep 2
         num=66
         while $(ps aux | grep -v 'grep' | grep "$thepid" &>/dev/null); do
@@ -207,9 +212,9 @@ specialprogressgauge(){
             showprogress1 $num $((num+1)) 
             num=$(( num+1 ))
         done
-        showprogress1 99 100 3 3
+        showprogress1 99 100 3 3 
         break
-    done  | whiptail --title "Progress Gauge" --gauge "Calculating stuff" 6 70 0
+    done  | whiptail --backtitle "$backmessage" --title "Progress Gauge" --gauge "$message" 6 70 0
 }
 
 mainmenu(){
@@ -238,7 +243,7 @@ mainmenu(){
             "T")    calltextbox ;;
             "P")    callpasswordbox ;;
             "G")    callprogressgauge ;;
-            "S")    specialprogressgauge ;;
+            "S")    specialprogressgauge calculate "Calculating stuff..." "CALCULATING STUFF" ;;
             "*")    (whiptail --title "Please make valid choice" --msgbox "Please make a valid choice.  Hit OK to continue" 8 75 ) ;;
         esac
     done
