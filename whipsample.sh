@@ -125,8 +125,6 @@ callprogressgauge(){
         echo $i
     done
     } | whiptail --gauge "Please wait..." 6 50 0
-
-    mainmenu
 }
 
 calculate(){
@@ -218,7 +216,7 @@ specialprogressgauge(){
 }
 
 mainmenu(){
-    $(which whiptail &>/dev/null) || echo "Oops!  No whiptail in your PATH!  Is whiptail installed?"
+    $(which whiptail &>/dev/null) || (echo "Oops!  No whiptail in your PATH!  Is whiptail installed?" && exit 1)
     while true; do
         choice=$(
         whiptail --backtitle "Whiptail Examples" --title "What shall we do?" --menu "Your choices" 22 80 12 \
