@@ -125,15 +125,101 @@ callprogressgauge(){
         echo $i
     done
     } | whiptail --gauge "Please wait..." 6 50 0
+}
 
-    mainmenu
+calculate(){
+    num=1
+    limit=40  # 2 minute loop
+    ## remove stale logfiles
+    [[ -f logfile ]] && rm logfile
+    while [[ $num -lt $limit ]]; do
+        echo -n "Num: $num  "  &>>logfile
+        date +"%D-->%H:%M:%S::%N" &>>logfile
+        sleep 1
+        num=$(( num+1 ))
+    done
+    echo "=== Done ===" &>>logfile
+}
+
+# Original idea for show progress. 
+showprogress(){
+    case $1 in
+        'b') arr=( 0 5 10 20 25 ) ;;
+        'm') arr=( 35 45 55 65 ) ;;
+        'e') arr=( 77 88 95 98 99 ) ;;
+          *) arr=()
+    esac
+
+    for n in "${arr[@]}"; do
+        echo $n
+        sleep 3
+    done
+
+    [[ $1 == 'e' ]] && echo 100 && sleep 5
+}
+
+# Later idea for show progress.  Little better
+# Basically the 2nd parameter IS the length of time in seconds
+showprogress1(){
+    start=$1; end=$2; shortest=$3; longest=$4
+
+    for n in $(seq $start $end); do
+        echo $n
+        pause=$(shuf -i ${shortest:=1}-${longest:=3} -n 1)  # random wait between 1 and 3 seconds
+        sleep $pause
+    done
+}
+
+specialprogressgauge1(){
+    process_to_measure=$1
+    message=$2
+    backmessage=$3
+    eval "$process_to_measure" &
+    thepid=$!
+    num=0
+    echo "thepid: $thepid"  
+    while true; do
+        if $(ps aux|grep "$thepid" &>/dev/null); then
+            #echo "PID: $thepid" &>>logfile
+            num=$(( num + 1 ))
+            sleep 0.1
+        else
+            num=100
+            sleep 2
+            break
+        fi
+        [[ $num -gt 100 ]] && break
+        echo $num
+    done  | whiptail --backtitle "$backmessage"  --title "Progress Gauge" --gauge "$message" 6 70 0 
+}
+
+specialprogressgauge(){
+    process_to_measure=$1
+    message=$2
+    backmessage=$3
+    eval $process_to_measure &
+    thepid=$!
+    while true; do
+        showprogress1 1 25 1 3
+        sleep 2
+        num=66
+        while $(ps aux | grep -v 'grep' | grep "$thepid" &>/dev/null); do
+            #echo $num 
+            if [[ $num -gt 77 ]] ; then num=$(( num-1 )); fi
+            #sleep 5
+            showprogress1 $num $((num+1)) 
+            num=$(( num+1 ))
+        done
+        showprogress1 99 100 3 3 
+        break
+    done  | whiptail --backtitle "$backmessage" --title "Progress Gauge" --gauge "$message" 6 70 0
 }
 
 mainmenu(){
-
+    $(which whiptail &>/dev/null) || (echo "Oops!  No whiptail in your PATH!  Is whiptail installed?" && exit 1)
     while true; do
         choice=$(
-        whiptail --backtitle "Whiptail Examples" --title "What shall we do?" --menu "Your choices" 16 80 9 \
+        whiptail --backtitle "Whiptail Examples" --title "What shall we do?" --menu "Your choices" 22 80 12 \
             "I"    "inputbox sample   (with msgbox sample)"  \
             "M"    "menu sample"      \
             "F"    "infobox sample"   \
@@ -142,6 +228,7 @@ mainmenu(){
             "T"    "textbox sample"   \
             "P"    "passwordbox sample"   \
             "G"    "progress gauge sample" \
+            "S"    "progress gauge 'special'" \
             "X"    "Exit (Yes/No box)"  3>&2 2>&1 1>&3
         )
         case $choice in 
@@ -154,6 +241,7 @@ mainmenu(){
             "T")    calltextbox ;;
             "P")    callpasswordbox ;;
             "G")    callprogressgauge ;;
+            "S")    specialprogressgauge calculate "Calculating stuff..." "CALCULATING STUFF" ;;
             "*")    (whiptail --title "Please make valid choice" --msgbox "Please make a valid choice.  Hit OK to continue" 8 75 ) ;;
         esac
     done
