@@ -225,3 +225,10 @@ speed the progress bar ahead to the end, but if the user's hardware is slow, I c
 the progress bar as long as I need to.  So far, I think this might be my favorite approach
 and solution.
 
+## find\_keymaps.sh
+
+I was looking for a way to find all my keyboard keymap files for my DARCHI script (to install Arch
+linux) and I needed to try out a few ideas.  Eventually I needed to only delete the map.gz suffix, 
+because there are lots of duplicates in the directory if you delete any part of the filename
+prior to the map.gz suffix.  I just needed a test function to try it out.
+
