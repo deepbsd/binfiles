@@ -18,7 +18,7 @@ for file in "${keymaps[@]}"; do
 
     newfile=$( echo $file | sed 's/.map.gz//g' )
     #options+=( "$newfile \" \"  $status"  )
-    options+=( $(printf "%s\t%s\n" $newfile '.....')  )
+    options+=( $(printf "%s\t%s\n" $newfile '=====')  )
 done
 
 #echo "number: ${#options[@]}"
@@ -27,9 +27,9 @@ done
 #    echo $line
 #done
 
-options=( "${options[@]:0:30}" )
+options=( "${options[@]:0:40}" )
 
 selection=$(eval `resize`; whiptail --title "Choose Keyboard Map" --menu "Default is us keymap" \
-    $((8+${#options[@]})) 80 $(("${#options[@]}")) "${options[@]}" 3>&1 1>&2 2>&3 )
+    30 80 $(("${#options[@]}"/2)) "${options[@]}" 3>&1 1>&2 2>&3 )
 
 echo "Your keymap is ${selection:-'howdie folks!'}"
