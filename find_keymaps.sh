@@ -17,19 +17,21 @@ for file in "${keymaps[@]}"; do
     fi
 
     newfile=$( echo $file | sed 's/.map.gz//g' )
-    options+=( $(printf "%s\t%s\t%s\n" $newfile \"====\" $status)  )
-    #options+=( $(printf "%s\t%s\n" $newfile '=====')  )
+    #options+=( $(printf "%s\t%s\t%s\n" $newfile \"====\" $status)  )
+    options+=( $(printf "%s\t\t\t\t%s\n" $newfile '=====')  )
 done
 
-#echo "number: ${#options[@]}"
+#options=( "${options[@]:0:90}" )
 
-#for line in "${options[@]}"; do
-#    echo $line
-#done
+length="${#options[@]}"
 
-options=( "${options[@]:0:20}" )
+echo "Length: $length"
 
-selection=$(eval `resize`; whiptail --title "Choose Keyboard Map" --radiolist "Default is us keymap" \
-    30 80 $(("${#options[@]}")) "${options[@]}" 3>&1 1>&2 2>&3 )
+for line in "${options[@]}"; do
+    echo $line
+done
+
+selection=$(eval `resize`; whiptail --backtitle "CHOOSE KEYMAP" --title "Choose Keyboard Map"  \
+    --menu "Default is us keymap" $LINES $COLUMNS $(( $LINES - 8 )) "${options[@]}" 3>&1 1>&2 2>&3 )
 
 echo "Your keymap is ${selection:-'howdie folks!'}"
