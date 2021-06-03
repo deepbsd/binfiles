@@ -18,7 +18,7 @@ for file in "${keymaps[@]}"; do
 
     newfile=$( echo $file | sed 's/.map.gz//g' )
     #options+=( $(printf "%s\t%s\t%s\n" $newfile \"====\" $status)  )
-    options+=( $(printf "%s\t\t\t\t%s\n" $newfile '=====')  )
+    options+=( $(printf "%s\t%s\n" $newfile '=====')  )
 done
 
 #options=( "${options[@]:0:90}" )
