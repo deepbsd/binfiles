@@ -17,18 +17,18 @@ apt-add-repository ppa:ondrej/php
 apt-get update
 
 # Install PHP
-apt-get install -y php7.2
+apt-get install -y php7.4
 
 # PHP Apache Mod
-apt-get install -y libapache2-mod-php7.2
+apt-get install -y libapache2-mod-php7.4
 
 # Restart Apache
 service apache2 restart
 
 # PHP Mods
-apt-get install -y php7.2-common
-apt-get install -y php7.2-mcrypt
-apt-get install -y php7.2-zip
+apt-get install -y php7.4-common
+apt-get install -y php7.4-mcrypt
+apt-get install -y php7.4-zip
 
 # Set MySQL Pass
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
@@ -38,7 +38,7 @@ debconf-set-selections <<< 'mysql-server mysql-server/root_password_again passwo
 apt-get install -y mysql-server
 
 # PHP-MYSQL lib
-apt-get install -y php7.2-mysql
+apt-get install -y php7.4-mysql
 
 # Restart Apache
 sudo service apache2 restart
