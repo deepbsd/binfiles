@@ -13,4 +13,4 @@ parted -s "$DRIVE" mkpart primary 2 100%
 
 parted -s "$DRIVE" set 2 lvm on
 
-
+# next part is format efi partition and then use cryptsetup on second physical volume
