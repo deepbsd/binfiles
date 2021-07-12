@@ -88,16 +88,16 @@ callradiolist(){
     # user can only select only ONE option
     selection=$(whiptail --title "Linux Distros" --radiolist \
         "What is your favorite distro? (Can only chose ONE)" 20 48 10 \
-        "Arch Linux" "" OFF \
-        "Ubuntu"  "" OFF \
-        "Linux Mint" "" OFF \
+        "Arch Linux"                          "the best" OFF \
+        "Ubuntu"                              "" OFF \
+        "Linux Mint"                          "" OFF \
         "Debian" "" OFF \
         "Red Hat/Fedora" "" OFF \
         "OpenSUSE" "" OFF \
         "Solus" "" OFF \
         "Antix/MX" "" OFF \
         "PopOS" "" OFF \
-        "EndeavourOS" "" OFF 3>&2 2>&1 1>&3 )
+        "EndeavourOS" "" OFF 3>&1 1>&2 2>&3 )
 
     showchoices "$selection"
 }

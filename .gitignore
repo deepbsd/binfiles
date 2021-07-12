@@ -1,2 +1,5 @@
+.gitignore
 ezarch.bios
 ezarch.uefi
+bin_juno
+logfile
