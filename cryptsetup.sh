@@ -4,6 +4,18 @@
 # we're using parted for creating partitions
 
 DRIVE=/dev/sda
+CRYPTVOL="arch_crypt"
+VOLGRP="arch_vg"
+
+LV_ROOT="${DRIVE}2"
+LV_SWAP="${DRIVE}3"
+LV_HOME="${DRIVE}4"
+
+ROOTSIZE=13G
+SWAPSIZE=4G
+HOMESIZE=""
+
+
 
 parted -s "$DRIVE" mklabel gpt
 
@@ -19,4 +31,6 @@ lsblk "$DRIVE"
 
 mkfs.vfat -f32 "${DRIVE}1"
 
+pvcreate /dev/mapper/"$CRYPTVOL"
 
+vgcreate "$VOLGRP" "$CRYPTVOL"
