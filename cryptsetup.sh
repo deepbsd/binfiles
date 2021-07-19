@@ -7,9 +7,9 @@ DRIVE=/dev/sda
 CRYPTVOL="arch_crypt"
 VOLGRP="arch_vg"
 
-LV_ROOT="${DRIVE}2"
-LV_SWAP="${DRIVE}3"
-LV_HOME="${DRIVE}4"
+LV_ROOT="ArchRoot"
+LV_SWAP="ArchSwap"
+LV_HOME="ArchHome"
 
 ROOTSIZE=13G
 SWAPSIZE=4G
@@ -34,3 +34,10 @@ mkfs.vfat -f32 "${DRIVE}1"
 pvcreate /dev/mapper/"$CRYPTVOL"
 
 vgcreate "$VOLGRP" "$CRYPTVOL"
+
+lvcreate -L "$ROOT_SIZE" "$CRYPTVOL" -n "$LV_ROOT"
+
+lvcreate -L "$SWAP_SIZE" "$CRYPTVOL" -n "$LV_SWAP"
+
+lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_SWAP"
+
