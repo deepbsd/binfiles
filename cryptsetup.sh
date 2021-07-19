@@ -46,3 +46,12 @@ lvcreate -L "$SWAP_SIZE" "$CRYPTVOL" -n "$LV_SWAP"
 
 lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_SWAP"
 
+
+# FORMAT VOLUMES
+
+mkfs.ext4 "/dev/${CRYPTVOL}/${LV_ROOT}"
+mkfs.ext4 "/dev/${CRYPTVOL}/${LV_HOME}"
+mkswap "/dev/${CRYPTVOL}/${LV_SWAP}"
+
+
+
