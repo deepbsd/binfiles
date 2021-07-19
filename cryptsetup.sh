@@ -17,6 +17,7 @@ HOMESIZE=""
 
 
 
+## PARTITION DRIVE
 parted -s "$DRIVE" mklabel gpt
 
 parted -s "$DRIVE" unit mib mkpart primary 1 512 
@@ -25,14 +26,18 @@ parted -s "$DRIVE" mkpart primary 2 100%
 
 parted -s "$DRIVE" set 2 lvm on
 
-# next part is format efi partition and then use cryptsetup on second physical volume
 
+# CHECK PARTITIONS
 lsblk "$DRIVE"
+read -p "Here're your partitions... Hit enter to continue..." empty
 
+# FORMAT EFI PARTITION
 mkfs.vfat -f32 "${DRIVE}1"
 
+# CREATE PHYSICAL VOL
 pvcreate /dev/mapper/"$CRYPTVOL"
 
+# CREATE VOLUME GRP and LOGICAL VOLS
 vgcreate "$VOLGRP" "$CRYPTVOL"
 
 lvcreate -L "$ROOT_SIZE" "$CRYPTVOL" -n "$LV_ROOT"
