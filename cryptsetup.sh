@@ -40,7 +40,7 @@ pvcreate /dev/mapper/"$CRYPTVOL"
 
 # SETUP ENCRYPTED VOLUME
 cryptsetup -y -v luksFormat $1 --key-file /tmp/passphrase
-
+cryptsetup luksOpen  "${DRIVE}2" $CRYPTVOL
 
 # CREATE VOLUME GRP and LOGICAL VOLS
 vgcreate "$VOLGRP" "$CRYPTVOL"
