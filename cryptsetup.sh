@@ -37,6 +37,11 @@ mkfs.vfat -f32 "${DRIVE}1"
 # CREATE PHYSICAL VOL
 pvcreate /dev/mapper/"$CRYPTVOL"
 
+
+# SETUP ENCRYPTED VOLUME
+cryptsetup -y -v luksFormat $1 --key-file /tmp/passphrase
+
+
 # CREATE VOLUME GRP and LOGICAL VOLS
 vgcreate "$VOLGRP" "$CRYPTVOL"
 
