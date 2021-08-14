@@ -37,7 +37,13 @@ lsblk "$DRIVE"
 read -p "Here're your partitions... Hit enter to continue..." empty
 
 # FORMAT EFI PARTITION
-mkfs.vfat -f32 "${DRIVE}1"
+mkfs.vfat -F32 "${DRIVE}1"
+
+# Get passphrase
+read -p "What is the passphrase?" /tmp/passphrase
+
+# SETUP CRYPTVOL
+cryptsetup -y -v luksFormat $1 --key-file /tmp/passphrase
 
 # CREATE PHYSICAL VOL
 pvcreate /dev/mapper/"$CRYPTVOL"
