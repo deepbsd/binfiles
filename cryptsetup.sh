@@ -25,12 +25,14 @@ parted -s "$DRIVE" mklabel gpt
 
 parted -s "$DRIVE" unit mib mkpart primary 1 512 
 
-parted -s "$DRIVE" mkpart primary 2 100%
+#parted -s "$DRIVE" mkpart primary 2 100%
+parted -s "$DRIVE" mkpart primary 537M 100%
 
 parted -s "$DRIVE" set 2 lvm on
 
 
 # CHECK PARTITIONS
+fdisk -l "$DRIVE"
 lsblk "$DRIVE"
 read -p "Here're your partitions... Hit enter to continue..." empty
 
