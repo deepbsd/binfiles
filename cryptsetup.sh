@@ -73,3 +73,7 @@ mount "/dev/mapper/${CRYPTVOL}/${LV_ROOT}"
 mount "/dev/mapper/${CRYPTVOL}/${LV_HOME}" /mnt/home
 
 
+# lsblk
+lsblk
+
+
