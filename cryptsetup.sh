@@ -52,13 +52,13 @@ cryptsetup luksOpen  "${DRIVE}2" "$CRYPTVOL"  --key-file /tmp/passphrase
 pvcreate /dev/mapper/"$CRYPTVOL"
 
 # CREATE VOLUME GRP and LOGICAL VOLS
-vgcreate "$VOLGRP" /dev/mapper/"$CRYPTVOL"
+vgcreate "$CRYPTVOL" /dev/mapper/"$CRYPTVOL"
 
-lvcreate -L "$ROOT_SIZE" "$VOLGRP" -n "$LV_ROOT"
+lvcreate -L "$ROOT_SIZE" "$CRYPTVOL" -n "$LV_ROOT"
 
-lvcreate -L "$SWAP_SIZE" "$VOLGRP" -n "$LV_SWAP"
+lvcreate -L "$SWAP_SIZE" "$CRYPTVOL" -n "$LV_SWAP"
 
-lvcreate -l 100%FREE "$VOLGRP" -n "$LV_HOME"
+lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_HOME"
 
 
 # FORMAT VOLUMES
