@@ -7,6 +7,9 @@ DRIVE=/dev/sda
 CRYPTVOL="arch_crypt"
 VOLGRP="arch_vg"
 
+PART_START="537MB"
+PART_END="32.2GB"
+
 LV_ROOT="ArchRoot"
 LV_SWAP="ArchSwap"
 LV_HOME="ArchHome"
