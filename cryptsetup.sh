@@ -42,25 +42,23 @@ mkfs.vfat -F32 "${DRIVE}1"
 # Get passphrase
 read -p "What is the passphrase?" /tmp/passphrase
 
-# SETUP CRYPTVOL
-cryptsetup -y -v luksFormat $1 --key-file /tmp/passphrase
-
-# CREATE PHYSICAL VOL
-pvcreate /dev/mapper/"$CRYPTVOL"
-
 
 # SETUP ENCRYPTED VOLUME
 cryptsetup -y -v luksFormat $1 --key-file /tmp/passphrase
 cryptsetup luksOpen  "${DRIVE}2" $CRYPTVOL
 
+
+# CREATE PHYSICAL VOL
+pvcreate /dev/mapper/"$CRYPTVOL"
+
 # CREATE VOLUME GRP and LOGICAL VOLS
-vgcreate "$VOLGRP" "$CRYPTVOL"
+vgcreate "$VOLGRP" /dev/mapper/"$CRYPTVOL"
 
 lvcreate -L "$ROOT_SIZE" "$CRYPTVOL" -n "$LV_ROOT"
 
 lvcreate -L "$SWAP_SIZE" "$CRYPTVOL" -n "$LV_SWAP"
 
-lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_SWAP"
+lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_HOME"
 
 
 # FORMAT VOLUMES
