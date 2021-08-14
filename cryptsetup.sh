@@ -18,8 +18,6 @@ ROOTSIZE=13G
 SWAPSIZE=4G
 HOMESIZE=""
 
-
-
 ## PARTITION DRIVE
 parted -s "$DRIVE" mklabel gpt
 
@@ -40,7 +38,9 @@ read -p "Here're your partitions... Hit enter to continue..." empty
 mkfs.vfat -F32 "${DRIVE}1"
 
 # Get passphrase
-read -p "What is the passphrase?" /tmp/passphrase
+read -p "What is the passphrase?" passph
+
+echo "$passph" > /tmp/passphrase
 
 
 # SETUP ENCRYPTED VOLUME
