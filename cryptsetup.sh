@@ -65,13 +65,13 @@ lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_HOME"
 
 mkfs.ext4 "/dev/${CRYPTVOL}/${LV_ROOT}"
 mkfs.ext4 "/dev/${CRYPTVOL}/${LV_HOME}"
-mkswap "/dev/${CRYPTVOL}/${LV_SWAP}"
+mkswap "/dev/${CRYPTVOL}-${LV_SWAP}"
+swapon "/dev/${CRYPTVOL}-${LV_SWAP}"
 
 # MOUNT VOLUMES
 mount "/dev/mapper/${CRYPTVOL}-${LV_ROOT}" /mnt
 [[ $? == 0 ]] && mkdir /mnt/home
 mount "/dev/mapper/${CRYPTVOL}-${LV_HOME}" /mnt/home
-
 
 # lsblk
 lsblk
