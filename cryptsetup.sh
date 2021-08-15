@@ -4,7 +4,7 @@
 # we're using parted for creating partitions
 
 DRIVE=/dev/sda
-CRYPTVOL="arch_crypt"
+CRYPTVOL="ArchCrypt"
 VOLGRP="arch_vg"
 
 PART_START="537MB"
