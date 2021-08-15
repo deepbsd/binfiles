@@ -62,7 +62,6 @@ lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_HOME"
 
 
 # FORMAT VOLUMES
-
 mkfs.ext4 "/dev/${CRYPTVOL}/${LV_ROOT}"
 mkfs.ext4 "/dev/${CRYPTVOL}/${LV_HOME}"
 mkswap "/dev/mapper/${CRYPTVOL}-${LV_SWAP}"
