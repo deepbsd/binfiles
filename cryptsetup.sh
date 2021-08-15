@@ -68,7 +68,7 @@ mkfs.ext4 "/dev/${CRYPTVOL}/${LV_HOME}"
 mkswap "/dev/${CRYPTVOL}/${LV_SWAP}"
 
 # MOUNT VOLUMES
-mount "/dev/mapper/${CRYPTVOL}/${LV_ROOT}"
+mount "/dev/mapper/${CRYPTVOL}/${LV_ROOT}" /mnt
 [[ $? == 0 ]] && mkdir /mnt/home
 mount "/dev/mapper/${CRYPTVOL}/${LV_HOME}" /mnt/home
 
