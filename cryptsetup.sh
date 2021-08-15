@@ -55,13 +55,10 @@ pvcreate /dev/mapper/"$CRYPTVOL"
 vgcreate "$CRYPTVOL" /dev/mapper/"$CRYPTVOL"
 
 lvcreate -L "$ROOTSIZE" "$CRYPTVOL" -n "$LV_ROOT"
-#lvcreate -L 13G "$CRYPTVOL" -n "$LV_ROOT"
 
 lvcreate -L "$SWAPSIZE" "$CRYPTVOL" -n "$LV_SWAP"
-#lvcreate -L 4G "$CRYPTVOL" -n "$LV_SWAP"
 
 lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_HOME"
-#lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_HOME"
 
 
 # FORMAT VOLUMES
