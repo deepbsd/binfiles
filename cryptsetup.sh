@@ -21,7 +21,7 @@ HOMESIZE=""
 ## PARTITION DRIVE
 parted -s "$DRIVE" mklabel gpt
 
-parted -s "$DRIVE" unit mib mkpart primary 1 512 
+parted -s "$DRIVE" unit mib mkpart primary 0 512 
 
 #parted -s "$DRIVE" mkpart primary 2 100%
 parted -s "$DRIVE" mkpart primary "$PART_START" 100%
