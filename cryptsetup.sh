@@ -75,6 +75,8 @@ prepare_vols(){
     mount "/dev/mapper/${CRYPTVOL}-${LV_ROOT}" /mnt
     [[ $? == 0 ]] && mkdir /mnt/home
     mount "/dev/mapper/${CRYPTVOL}-${LV_HOME}" /mnt/home
+    mkdir /mnt/boot && mkdir /mnt/boot/efi
+    mount "${DRIVE}1" /mnt/boot/efi
 
     # SHOW OUR WORK
     lsblk
