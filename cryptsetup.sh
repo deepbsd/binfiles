@@ -53,7 +53,7 @@ crypt_setup(){
     # FILL PART WITH ZEROS
     dd if=/dev/zero of="${DRIVE}2" bs=1M    
     cryptsetup luksClose "${DRIVE}2"                    
-    dd if=/dev/urandom of="$1" bs=512 count=20480     
+    dd if=/dev/urandom of="${DRIVE}2" bs=512 count=20480     
     cryptsetup -v status "${DRIVE}2"    
 }
 
