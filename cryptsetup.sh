@@ -24,7 +24,7 @@ parted -s "$DRIVE" mklabel gpt
 parted -s "$DRIVE" unit mib mkpart primary 1 512 
 
 #parted -s "$DRIVE" mkpart primary 2 100%
-parted -s "$DRIVE" mkpart primary 537M 100%
+parted -s "$DRIVE" mkpart primary "$PART_START" 100%
 
 parted -s "$DRIVE" set 2 lvm on
 
