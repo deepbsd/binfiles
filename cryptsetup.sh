@@ -17,6 +17,8 @@ ROOTSIZE=13G
 SWAPSIZE=4G
 HOMESIZE=""
 
+## FUNCTIONS
+
 part_drive(){
     ## PARTITION DRIVE
     parted -s "$DRIVE" mklabel gpt
