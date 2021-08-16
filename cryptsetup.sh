@@ -4,12 +4,11 @@
 # we're using parted for creating partitions
 
 DRIVE=/dev/sda
-CRYPTVOL="ArchCrypt"
-VOLGRP="arch_vg"
 
 PART_START="537MB"
 PART_END="32.2GB"
 
+CRYPTVOL="ArchCrypt"
 LV_ROOT="ArchRoot"
 LV_SWAP="ArchSwap"
 LV_HOME="ArchHome"
