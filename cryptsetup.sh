@@ -17,61 +17,70 @@ ROOTSIZE=13G
 SWAPSIZE=4G
 HOMESIZE=""
 
-## PARTITION DRIVE
-parted -s "$DRIVE" mklabel gpt
+part_drive(){
+    ## PARTITION DRIVE
+    parted -s "$DRIVE" mklabel gpt
 
-parted -s "$DRIVE" unit mib mkpart primary 1 512 
+    parted -s "$DRIVE" unit mib mkpart primary 1 512 
 
-#parted -s "$DRIVE" mkpart primary 2 100%
-parted -s "$DRIVE" mkpart primary "$PART_START" 100%
+    #parted -s "$DRIVE" mkpart primary 2 100%
+    parted -s "$DRIVE" mkpart primary "$PART_START" 100%
 
-parted -s "$DRIVE" set 2 lvm on
+    parted -s "$DRIVE" set 2 lvm on
 
+    # FORMAT EFI PARTITION
+    mkfs.vfat -F32 "${DRIVE}1"
 
-# CHECK PARTITIONS
-fdisk -l "$DRIVE"
-lsblk "$DRIVE"
-read -p "Here're your partitions... Hit enter to continue..." empty
+    # CHECK PARTITIONS
+    fdisk -l "$DRIVE"
+    lsblk "$DRIVE"
+    read -p "Here're your partitions... Hit enter to continue..." empty
+}
 
-# FORMAT EFI PARTITION
-mkfs.vfat -F32 "${DRIVE}1"
+crypt_setup(){
+    # Get passphrase
+    read -p "What is the passphrase?" passph
 
-# Get passphrase
-read -p "What is the passphrase?" passph
-
-echo "$passph" > /tmp/passphrase
-
-
-# SETUP ENCRYPTED VOLUME
-cryptsetup -y -v luksFormat "${DRIVE}2" --key-file /tmp/passphrase
-cryptsetup luksOpen  "${DRIVE}2" "$CRYPTVOL"  --key-file /tmp/passphrase
+    echo "$passph" > /tmp/passphrase
 
 
-# CREATE PHYSICAL VOL
-pvcreate /dev/mapper/"$CRYPTVOL"
+    # SETUP ENCRYPTED VOLUME
+    cryptsetup -y -v luksFormat "${DRIVE}2" --key-file /tmp/passphrase
+    cryptsetup luksOpen  "${DRIVE}2" "$CRYPTVOL"  --key-file /tmp/passphrase
+}
 
-# CREATE VOLUME GRP and LOGICAL VOLS
-vgcreate "$CRYPTVOL" /dev/mapper/"$CRYPTVOL"
+prepare_vols(){
+    # CREATE PHYSICAL VOL
+    pvcreate /dev/mapper/"$CRYPTVOL"
 
-lvcreate -L "$ROOTSIZE" "$CRYPTVOL" -n "$LV_ROOT"
+    # CREATE VOLUME GRP and LOGICAL VOLS
+    vgcreate "$CRYPTVOL" /dev/mapper/"$CRYPTVOL"
 
-lvcreate -L "$SWAPSIZE" "$CRYPTVOL" -n "$LV_SWAP"
+    lvcreate -L "$ROOTSIZE" "$CRYPTVOL" -n "$LV_ROOT"
 
-lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_HOME"
+    lvcreate -L "$SWAPSIZE" "$CRYPTVOL" -n "$LV_SWAP"
 
-
-# FORMAT VOLUMES
-mkfs.ext4 "/dev/${CRYPTVOL}/${LV_ROOT}"
-mkfs.ext4 "/dev/${CRYPTVOL}/${LV_HOME}"
-mkswap "/dev/mapper/${CRYPTVOL}-${LV_SWAP}"
-swapon "/dev/mapper/${CRYPTVOL}-${LV_SWAP}"
-
-# MOUNT VOLUMES
-mount "/dev/mapper/${CRYPTVOL}-${LV_ROOT}" /mnt
-[[ $? == 0 ]] && mkdir /mnt/home
-mount "/dev/mapper/${CRYPTVOL}-${LV_HOME}" /mnt/home
-
-# lsblk
-lsblk
+    lvcreate -l 100%FREE "$CRYPTVOL" -n "$LV_HOME"
 
 
+    # FORMAT VOLUMES
+    mkfs.ext4 "/dev/${CRYPTVOL}/${LV_ROOT}"
+    mkfs.ext4 "/dev/${CRYPTVOL}/${LV_HOME}"
+    mkswap "/dev/mapper/${CRYPTVOL}-${LV_SWAP}"
+    swapon "/dev/mapper/${CRYPTVOL}-${LV_SWAP}"
+
+    # MOUNT VOLUMES
+    mount "/dev/mapper/${CRYPTVOL}-${LV_ROOT}" /mnt
+    [[ $? == 0 ]] && mkdir /mnt/home
+    mount "/dev/mapper/${CRYPTVOL}-${LV_HOME}" /mnt/home
+
+    # SHOW OUR WORK
+    lsblk
+}
+
+
+## START
+
+part_drive
+crypt_setup
+prepare_vols
