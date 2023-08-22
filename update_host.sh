@@ -44,7 +44,6 @@ update_host(){     # Run the actual update on each host in the file
 }
 
 
-
 main(){
     identify
     update_host
