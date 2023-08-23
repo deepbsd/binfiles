@@ -20,11 +20,12 @@ read passwd
 identify(){    # Get the users credentials
 
     if pgrep ssh-agent ; then
-        echo continuing...
+        echo ssh-agent already running...
     else
         eval $(ssh-agent)
     fi
     ssh-add
+    echo "$USER's identify added...."
 }
 
 
