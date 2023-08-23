@@ -33,10 +33,12 @@ update_host(){     # Run the actual update on each host in the file
 
     for h in "${hosts[@]}"; do
 
-        echo "HOST: $h"
+        echo "=======> HOST: $h  <======="
 
         if [ ! `cat /etc/hostname` == "$h" ]; then
-            ssh "$h.lan"  echo "$passwd" | sudo -S pacman --noconfirm -Syyu
+ssh -t $USER@$h.lan  << EOF
+echo "$passwd" | sudo -S pacman --noconfirm -Syyu
+EOF
         else
             echo "$passwd" | sudo -S pacman --noconfirm -Syyu
         fi
