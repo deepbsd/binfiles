@@ -7,11 +7,12 @@
 ######### Variables  ################
 
 hosts_file=$HOME/hosts.txt
+lock_file=/var/lib/pacman/db.lck
 [ -f $hosts_file  ] || ( echo "No Hosts file!" && exit 1 )
 
 declare -a hosts 
+declare -a locked_hosts=()
 hosts=( $(cat $hosts_file) )
-locked_hosts=()
 echo -n 'What is your sudo user password?   '
 read passwd
 
@@ -38,7 +39,7 @@ update_host(){     # Run the actual update on each host in the file
 
         if [ ! `cat /etc/hostname` == "$h" ]; then
 ssh -tt $USER@$h.lan  << EOF
-[ -f /var/lib/pacman/db.lck ] && locked_hosts+=( "$h.lan" )
+[ -f "$lock_file" ] && locked_hosts+=( "$h.lan" )
 echo "$passwd" | sudo -S pacman --noconfirm -Syyu
 exit
 EOF
