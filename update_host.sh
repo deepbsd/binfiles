@@ -37,6 +37,11 @@ update_host(){     # Run the actual update on each host in the file
 
         if [ ! `cat /etc/hostname` == "$h" ]; then
 ssh -tt $USER@$h.lan  << EOF
+while pgrep pacman ; do
+echo "waiting for pacman database..."
+sleep 5
+done
+neofetch
 echo "$passwd" | sudo -S pacman --noconfirm -Syyu
 exit
 EOF
