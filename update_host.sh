@@ -9,7 +9,7 @@
 hosts_file=$HOME/hosts.txt
 [ -z $hosts_file  ] && echo "No Hosts file!" && exit 1
 
-declare -a hosts locked_hosts
+declare -a hosts 
 hosts=( $(cat $hosts_file) )
 locked_hosts=()
 echo -n 'What is your sudo user password?   '
@@ -49,11 +49,19 @@ EOF
     done
 }
 
+print_locked(){
+    if [ -z ${locked_hosts} ] ; then
+        echo "=== No Locked Hosts ==="
+    else
+        echo "=== LOCKED HOSTS ==="
+        echo "${locked_hosts[@]}"
+    fi
+}
 
 main(){
     identify
     update_host
-    [ -z ${locked_hosts} ] || echo "${locked_hosts[@]}"
+    print_locked
 }
 
 
