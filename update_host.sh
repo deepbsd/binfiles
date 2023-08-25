@@ -7,7 +7,7 @@
 ######### Variables  ################
 
 hosts_file=$HOME/hosts.txt
-[ -z $hosts_file  ] && echo "No Hosts file!" && exit 1
+[ -f $hosts_file  ] || ( echo "No Hosts file!" && exit 1 )
 
 declare -a hosts 
 hosts=( $(cat $hosts_file) )
