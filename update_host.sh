@@ -6,13 +6,20 @@
 
 ######### Variables  ################
 
-hosts_file=$HOME/hosts.txt
+hosts_file=$HOME/bin/hosts.txt
 lock_file=/var/lib/pacman/db.lck
 [ -f $hosts_file  ] || ( echo "No Hosts file!" && exit 1 )
 
+# populate or clear some variables
 declare -a hosts 
 locked_hosts=()
 hosts=( $(cat $hosts_file) )
+arch_hosts=( boomer scee daisy juno peach dixie molly blub milo pumpkin )
+deb_hosts=( roscoe omalley )
+
+
+
+# Get the sudo user password
 echo -n 'What is your sudo user password?   '
 read passwd
 
