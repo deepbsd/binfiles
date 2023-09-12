@@ -46,7 +46,7 @@ update_host(){     # Run the actual update on each host in the file
 
         if [ ! `cat /etc/hostname` == "$h" ]; then
 ssh -tt $USER@$h.lan  << EOF
-[[ -f "$lock_file" ]]  && locked_hosts+=( "$h.lan" )
+[[ -f "$lock_file" ]] && locked_hosts+=( "$h.lan" )
 [[ "${arch_hosts[@]}" =~ "$h" ]] && echo "$passwd" | sudo -S pacman --noconfirm -Syyu
 [[ "${deb_hosts[@]}" =~ "$h" ]] && echo "$passwd" | sudo apt update && sudo apt dist-upgrade -y
 exit
