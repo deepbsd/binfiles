@@ -8,3 +8,6 @@ molly
 blub
 milo
 pumpkin
+speedy
+omalley
+roscoe
