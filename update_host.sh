@@ -14,7 +14,7 @@ lock_file=/var/lib/pacman/db.lck
 declare -a hosts 
 locked_hosts=()
 hosts=( $(cat $hosts_file) )
-arch_hosts=( boomer scee daisy juno peach dixie molly blub milo pumpkin )
+arch_hosts=( boomer scee daisy speedy juno peach dixie molly blub milo pumpkin )
 deb_hosts=( roscoe omalley )
 
 
