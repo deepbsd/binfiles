@@ -14,7 +14,7 @@ show_size(){
     echo "medium=$medium"
     echo "large=$large"
     echo "largest=$largest"
-    eval $get_command
+    echo -n "Your current size: "; eval $get_command
 }
 
 set_size(){
