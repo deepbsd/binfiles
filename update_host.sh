@@ -74,7 +74,7 @@ EOF
 
 print_locked(){
     if [ ${#locked_hosts[@]} -eq 0 ] ; then
-        echo "=== No Locked Hosts ==="
+        echo -e "\n=== No Locked Hosts ===\n"
     else
         echo -e "\n=== LOCKED HOSTS ===\n"
         echo "${locked_hosts[@]}"
