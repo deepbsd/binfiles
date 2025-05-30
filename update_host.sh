@@ -78,6 +78,7 @@ print_locked(){
     else
         echo -e "\n=== LOCKED HOSTS ===\n"
         echo "${locked_hosts[@]}"
+        echo -e "\n=== DOWN HOSTS ===\n"
         echo "${down_hosts[@]}"
     fi
 }
