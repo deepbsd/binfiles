@@ -9,5 +9,6 @@ blub
 milo
 pumpkin
 speedy
+peanut
 omalley
 roscoe
