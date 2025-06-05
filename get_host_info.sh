@@ -18,18 +18,21 @@ get_info(){
 
 print_info(){
 
-    echo "$( hostname ) $mobo $mycpu"
+    echo "$mobo $mycpu"
 
 }
 
 
 main(){
 
-    for h in "${hosts[@]}" ; do
-        ssh -tt dsj@$h.lan   <<EOF 
-        get_info
-        print_info
-        exit
+    echo "${hosts[@]}"
+
+for h in "${hosts[@]}" ; do
+ssh -tt $USER@$h.lan   << EOF 
+get_info
+echo "$h : "
+print_info
+exit
 EOF
     done
 
