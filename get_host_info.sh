@@ -6,6 +6,7 @@
 hosts_file=$HOME/bin/hosts.txt
 passwd='rtfm4me'
 hosts=( $(cat $hosts_file) )
+down_hosts=()
 
 
 
@@ -21,6 +22,7 @@ host_is_up(){     # pass the hostname to check as $1
 
 
 get_info(){
+
     export mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
     export mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
 }
@@ -28,9 +30,19 @@ get_info(){
 
 
 print_info(){
+
     echo "$mobo $mycpu"
 }
 
+print_down(){
+    if [ ${#down_hosts[@]} -eq 0 ]; then
+        echo -e "\n=== No Hosts Down ===\n"
+    else
+        echo -e "\n=== DOWN HOSTS ===\n"
+        echo "${down_hosts[@]}"
+    fi
+
+}
 
 main(){
 
@@ -50,13 +62,15 @@ exit
 EOF
     else
        echo "Localhost: "
-       mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
-       mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  )
+       export mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
+       export mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  )
        echo "$mycpu  $mobo"
        exit
     fi
     done
+
 }
 
 
 main
+print_down
