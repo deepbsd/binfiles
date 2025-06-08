@@ -29,9 +29,6 @@ get_info(){
 }
 
 
-#lscpu | grep 'Model name' | cut -c 39-  
-#echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  | cut -c 15-
-
 
 print_info(){
 
