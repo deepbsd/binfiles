@@ -38,7 +38,7 @@ print_down(){
     if [ ${#down_hosts[@]} -eq 0 ]; then
         echo -e "\n=== No Hosts Down ===\n"
     else
-        echo -e "\n=== DOWN HOSTS ===\n"
+        echo -e "\n===> DOWN HOSTS <===\n"
         echo "${down_hosts[@]}"
     fi
 
@@ -57,14 +57,14 @@ main(){
 ssh -tt $USER@$h.lan   << EOF 
 lscpu | grep 'Model name' | cut -c 39- 
 echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 15-
-echo "$mobo $mycpu"
+echo "MOBO: $mobo CPU: $mycpu"
 exit
 EOF
     else
        echo "Localhost: "
        export mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
        export mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  )
-       echo "$mycpu  $mobo"
+       echo "CPU:  $mycpu MOBO: $mobo"
     fi
     done
 
