@@ -17,30 +17,22 @@ host_is_up(){     # pass the hostname to check as $1
     down_hosts+=( $1 )
     echo -e "\n=====> HOST: $1 is Down <======\n"
     return 1
-
 }
 
 
 get_info(){
-
     export mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
     export mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
-
 }
 
 
 
 print_info(){
-
     echo "$mobo $mycpu"
-
 }
 
 
 main(){
-
-    #echo "${hosts[@]}"
-    #echo ${hosts}
 
     for h in "${hosts[@]}" ; do
 
@@ -63,7 +55,6 @@ EOF
        echo "$mycpu  $mobo"
     fi
     done
-
 }
 
 
