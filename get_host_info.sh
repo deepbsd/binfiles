@@ -9,25 +9,40 @@ hosts=$( cat "$hosts_file" )
 
 
 
-get_info(){
 
-    mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
-    mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
+host_is_up(){     # pass the hostname to check as $1
+# check and make sure the host is up on the localnet
 
-}
-
-print_info(){
-
-    echo "$mobo $mycpu"
+    ( ping -c3 $1 &>/dev/null ) && return 0
+    down_hosts+=( $1 )
+    echo -e "\n=====> HOST: $1 is Down <======\n"
+    return 1
 
 }
+
+
+#get_info(){
+#
+#    mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
+#    mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
+#
+#}
+#
+#print_info(){
+#
+#    echo "$mobo $mycpu"
+#
+#}
 
 
 main(){
 
-    echo "${hosts[@]}"
+    #echo "${hosts[@]}"
 
 for h in "${hosts[@]}" ; do
+
+        host_is_up "$h" || continue  # skip hosts that are down
+
 ssh -tt $USER@$h.lan   << EOF 
 mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
 mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
