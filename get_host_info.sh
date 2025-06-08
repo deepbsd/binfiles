@@ -5,7 +5,7 @@
 
 hosts_file=$HOME/bin/hosts.txt
 passwd='rtfm4me'
-hosts=$( cat "$hosts_file" )
+hosts=( $(cat $hosts_file) )
 
 
 
@@ -37,19 +37,26 @@ host_is_up(){     # pass the hostname to check as $1
 
 main(){
 
-    #echo "${hosts[@]}"
+    echo "${hosts[@]}"
+    echo ${hosts}
 
-for h in "${hosts[@]}" ; do
+    for h in "${hosts[@]}" ; do
 
         host_is_up "$h" || continue  # skip hosts that are down
 
+        if [ ! `cat /etc/hostname` == "$h" ]; then
 ssh -tt $USER@$h.lan   << EOF 
 mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
-mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
+mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  )
 echo "$h : "
 echo "$mobo $mycpu"
 exit
 EOF
+    else
+       echo "oops"
+       # mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
+       # mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  )
+    fi
     done
 
 }
