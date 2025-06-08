@@ -51,13 +51,14 @@ main(){
 ssh -tt $USER@$h.lan   << EOF 
 
 lscpu | grep 'Model name' | cut -c 39-  
-echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' 
+echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  | cut -c 15-
 exit
 EOF
     else
-       echo "oops"
-       # mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
-       # mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  )
+       echo "Localhost: "
+       mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
+       mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  )
+       echo "$mycpu  $mobo"
     fi
     done
 
