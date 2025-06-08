@@ -53,6 +53,7 @@ EOF
        mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
        mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  )
        echo "$mycpu  $mobo"
+       exit
     fi
     done
 }
