@@ -29,9 +29,10 @@ main(){
 
 for h in "${hosts[@]}" ; do
 ssh -tt $USER@$h.lan   << EOF 
-get_info
+mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
+mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
 echo "$h : "
-print_info
+echo "$mobo $mycpu"
 exit
 EOF
     done
