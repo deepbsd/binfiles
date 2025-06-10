@@ -28,7 +28,7 @@ host_is_up(){     # pass the hostname to check as $1
 get_info(){
 
     mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
-    mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
+    mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name' | sed -e 's/^.*://'  )
 }
 
 
@@ -60,14 +60,13 @@ main(){
 
 ssh -tt $USER@$h.lan   << EOF 
 lscpu | grep 'Model name' | cut -c 39-
-echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 15-
-echo "MOBO: $mobo CPU: $mycpu"
+echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name' | sed -e 's/^.*://' 
 exit
 EOF
     else
        echo "Localhost: "
        mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
-       mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name'  )
+       mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name'  | sed -e 's/^.*://' )
        echo "CPU:  $mycpu MOBO: $mobo"
        mycpu=""; mobo="";
     fi
