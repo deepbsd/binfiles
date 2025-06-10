@@ -7,6 +7,8 @@ hosts_file=$HOME/bin/hosts.txt
 passwd='rtfm4me'
 hosts=( $(cat $hosts_file) )
 down_hosts=()
+mobo=""
+mycpu=""
 
 
 
@@ -57,6 +59,8 @@ main(){
 ssh -tt $USER@$h.lan   << EOF 
 lscpu | grep 'Model name' | cut -c 39- 
 echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 15-
+mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
+mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
 echo "MOBO: $mobo CPU: $mycpu"
 exit
 EOF
