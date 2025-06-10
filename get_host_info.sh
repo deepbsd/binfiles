@@ -25,7 +25,8 @@ host_is_up(){     # pass the hostname to check as $1
 
 get_info(){
 
-    export mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
+    #export mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
+    export mycpu=$( lscpu | grep 'Model name' | awk '{print substr($1, 12)}'  )
     export mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
 }
 
@@ -57,9 +58,9 @@ main(){
         if [ ! `cat /etc/hostname` == "$h" ]; then
 
 ssh -tt $USER@$h.lan   << EOF 
-lscpu | grep 'Model name' | cut -c 39- 
+lscpu | grep 'Model name' | awk '{print substr($0, 12)}'
 echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 15-
-mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
+mycpu=$( lscpu | grep 'Model name' | awk '{print substr($1, 12)}'  )
 mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
 echo "MOBO: $mobo CPU: $mycpu"
 exit
