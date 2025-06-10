@@ -60,13 +60,13 @@ main(){
 
 ssh -tt $USER@$h.lan   << EOF 
 lscpu | grep 'Model name' | cut -c 39-
-echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name' | sed -e 's/^.*://' 
+echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name' | sed -e 's/^.*:\{1,3\}//' 
 exit
 EOF
     else
        echo "Localhost: "
        mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
-       mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name'  | sed -e 's/^.*://' )
+       mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name'  | sed -e 's/^.*:\{1,3\}//' )
        echo "CPU:  $mycpu MOBO: $mobo"
        mycpu=""; mobo="";
     fi
