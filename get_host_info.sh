@@ -65,9 +65,9 @@ exit
 EOF
     else
        echo "Localhost: "
-       mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
+       mycpu=$( lscpu | grep 'Model name' | sed -e 's/^.*: *//' )
        mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name'  | sed -e 's/^.*: //' )
-       echo "CPU:  $mycpu MOBO: $mobo"
+       echo "CPU: $mycpu MOBO: $mobo"
        mycpu=""; mobo="";
     fi
     done
