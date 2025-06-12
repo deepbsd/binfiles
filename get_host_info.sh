@@ -11,10 +11,6 @@ mobo=""
 mycpu=""
 
 
-#export mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
-#export mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Manufacturer\|Product Name' | cut -c 29-  )
-
-
 host_is_up(){     # pass the hostname to check as $1
 # check and make sure the host is up on the localnet
 
