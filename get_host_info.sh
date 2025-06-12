@@ -51,7 +51,7 @@ main(){
 
         if [ ! `cat /etc/hostname` == "$h" ]; then
 
-            ssh $USER@$h.lan  "$(typeset -f get_info); get_info" 
+            ssh $USER@$h.lan "$(typeset -f get_info); get_info" 
        
         else
            echo "Localhost: "
