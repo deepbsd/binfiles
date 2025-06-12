@@ -23,16 +23,11 @@ host_is_up(){     # pass the hostname to check as $1
 
 get_info(){
     # set up the variables for each host
-    mycpu=$( lscpu | grep 'Model name' | cut -c 39-  )
-    mobo=$( echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name' | sed -e 's/^.*: //'  )
+    mycpu=`lscpu | grep 'Model name' | cut -c 39-`
+    mobo=`echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name' | sed -e 's/^.*: //'` 
+    echo -e "\n*****>$mobo $mycpu<******\n"
 }
 
-
-
-print_info(){
-
-    echo "$mobo $mycpu"
-}
 
 print_down(){
     if [ ${#down_hosts[@]} -eq 0 ]; then
@@ -54,11 +49,8 @@ main(){
 
         if [ ! `cat /etc/hostname` == "$h" ]; then
 
-ssh -tt $USER@$h.lan   << EOF 
-lscpu | grep 'Model name' | cut -c 39-
-echo "$passwd" |  sudo -S dmidecode -t baseboard | grep -e 'Product Name' | sed -e 's/^.*: //' 
-exit
-EOF
+        ssh $USER@$h.lan  "$(typeset -f get_info); get_info; exit" 
+       
     else
        echo "Localhost: "
        mycpu=$( lscpu | grep 'Model name' | sed -e 's/^.*: *//' )
