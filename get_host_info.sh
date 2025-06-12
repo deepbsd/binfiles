@@ -37,7 +37,6 @@ print_down(){
         echo -e "\n===> DOWN HOSTS <===\n"
         echo "${down_hosts[@]}"
     fi
-
 }
 
 main(){
@@ -61,7 +60,6 @@ main(){
            mycpu=""; mobo="";
         fi
     done
-
 }
 
 
