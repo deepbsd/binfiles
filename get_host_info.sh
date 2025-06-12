@@ -41,7 +41,8 @@ print_down(){
 }
 
 main(){
-
+    # if we're on a remote host, run the first command; else 
+    # run the second command
     for h in "${hosts[@]}" ; do
 
         host_is_up "$h" || continue  # skip hosts that are down
