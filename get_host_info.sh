@@ -31,6 +31,7 @@ get_info(){
 
 
 print_down(){
+    # Print hosts that are offline
     if [ ${#down_hosts[@]} -eq 0 ]; then
         echo -e "\n=== No Hosts Down ===\n"
     else
