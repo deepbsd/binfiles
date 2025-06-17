@@ -78,12 +78,15 @@ update_host(){     # Run the actual update on each host in the file
 
         echo -e "\n=======> HOST: $h  <=======\n"
 
+        [[ -f "$lock_file" ]] && locked_hosts+=( "$h.lan" )
+
         if [ ! `cat /etc/hostname` == "$h" ]; then
 ssh $USER@$h.lan bash -s <<EOF
-$(typeset -p)
+$(typeset -f get_info)
 get_info
-[[ -f "$lock_file" ]] && locked_hosts+=( "$h.lan" )
+$(typeset -f arch_update)
 [[ "${arch_hosts[@]}" =~ "$h" ]] && arch_update
+$(typeset -f deb_update)
 [[ "${deb_hosts[@]}" =~ "$h" ]] &&  deb_update
 exit
 EOF
