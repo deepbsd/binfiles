@@ -49,6 +49,27 @@ host_is_up(){     # pass the hostname to check as $1
 
 }
 
+get_info(){
+    # set up the variables for each host
+    passwd='rtfm4me'
+    mycpu=`lscpu | grep 'Model name' | cut -c 39-`
+    mobo=`echo "$passwd" | sudo -S dmidecode -t baseboard | grep -e 'Product Name' | sed -e 's/^.*: *//'` 
+    echo -e "\n*****>$mobo $mycpu<******\n"
+    exit
+}
+
+check_lock(){
+    [[ -f "$lock_file" ]] && locked_hosts+=( "$h.lan" )
+}
+
+arch_update(){
+    echo "$passwd" | sudo -S pacman --noconfirm -Syyu
+}
+
+deb_update(){
+    echo "$passwd" | sudo -S apt update && sudo -S  apt dist-upgrade -y && exit
+}
+
 update_host(){     # Run the actual update on each host in the file
 
     for h in "${hosts[@]}"; do
@@ -58,9 +79,10 @@ update_host(){     # Run the actual update on each host in the file
         echo -e "\n=======> HOST: $h  <=======\n"
 
         if [ ! `cat /etc/hostname` == "$h" ]; then
+ssh $USER@$h.lan "$(typeset -f get_info); get_info" 
 ssh -tt $USER@$h.lan   << EOF
 [[ -f "$lock_file" ]] && locked_hosts+=( "$h.lan" )
-[[ "${arch_hosts[@]}" =~ "$h" ]] && echo "$passwd" | sudo -S pacman --noconfirm -Syyu 
+[[ "${arch_hosts[@]}" =~ "$h" ]] && get_info
 [[ "${deb_hosts[@]}" =~ "$h" ]] && echo "$passwd" | sudo -S apt update && sudo -S apt dist-upgrade -y; exit
 exit
 EOF
