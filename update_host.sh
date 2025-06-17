@@ -59,7 +59,7 @@ get_info(){
 }
 
 check_lock(){
-    [[ -f "$lock_file" ]] && locked_hosts+=( "$h.lan" )
+    [[ -f "$lock_file" ]] && locked_hosts+=( "$1.lan" )
 }
 
 arch_update(){
@@ -79,11 +79,12 @@ update_host(){     # Run the actual update on each host in the file
         echo -e "\n=======> HOST: $h  <=======\n"
 
         if [ ! `cat /etc/hostname` == "$h" ]; then
-ssh $USER@$h.lan "$(typeset -f get_info); get_info" 
-ssh -tt $USER@$h.lan   << EOF
+ssh $USER@$h.lan bash -s <<EOF
+$(typeset -p)
+get_info
 [[ -f "$lock_file" ]] && locked_hosts+=( "$h.lan" )
-[[ "${arch_hosts[@]}" =~ "$h" ]] && get_info
-[[ "${deb_hosts[@]}" =~ "$h" ]] && echo "$passwd" | sudo -S apt update && sudo -S apt dist-upgrade -y; exit
+[[ "${arch_hosts[@]}" =~ "$h" ]] && arch_update
+[[ "${deb_hosts[@]}" =~ "$h" ]] &&  deb_update
 exit
 EOF
         else
