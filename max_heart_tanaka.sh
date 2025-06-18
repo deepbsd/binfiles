@@ -11,7 +11,7 @@ max_hr=$(echo -e "208-$factor" | bc)
 echo "Your max heart rate is $max_hr"
 echo "Do you accept this max hr?"
 read accept
-if [[$accept =~ 'yY' ]] ; then 
+if ( "$accept" =~ 'y' ) ; then 
     continue
 else
     echo "What is your Max HR?"
