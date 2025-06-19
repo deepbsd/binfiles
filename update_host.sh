@@ -82,8 +82,6 @@ update_host(){     # Run the actual update on each host in the file
 
         if [ ! `cat /etc/hostname` == "$h" ]; then
 ssh $USER@$h.lan bash -s <<EOF
-$(typeset -f get_info)
-get_info
 $(typeset -f arch_update)
 [[ "${arch_hosts[@]}" =~ "$h" ]] && arch_update
 $(typeset -f deb_update)
