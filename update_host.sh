@@ -63,10 +63,12 @@ check_lock(){
 }
 
 arch_update(){
+    passwd='rtfm4me'
     echo "$passwd" | sudo -S pacman --noconfirm -Syyu
 }
 
 deb_update(){
+    passwd='rtfm4me'
     echo "$passwd" | sudo -S apt update && sudo -S  apt dist-upgrade -y && exit
 }
 
