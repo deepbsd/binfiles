@@ -61,6 +61,11 @@ check_lock(){
     [[ -f "$lock_file" ]] && locked_hosts+=( "$1.lan" )
 }
 
+check_connectivity(){
+    [[ $(ping -c3 archlinux.org &>/dev/null) ]] && return 0
+    return 1
+}
+
 restart_nameservice(){
     passwd='rtfm4me'
     echo "****> OOPS!  Restarting Nameservice! <****"
@@ -91,6 +96,9 @@ update_host(){     # Run the actual update on each host in the file
 ssh $USER@$h.lan bash -s <<EOF
 $(typeset -f get_info)
 get_info
+$(typeset -f check_connectivity)
+$(typeset -f restart_nameservice) 
+[[ `cat /etc/hostname` == 'milo' ]] && (check_connectivity || restart_nameservice)
 $(typeset -f arch_update)
 [[ "${arch_hosts[@]}" =~ "$h" ]] && arch_update
 $(typeset -f deb_update)
