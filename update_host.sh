@@ -61,6 +61,12 @@ check_lock(){
     [[ -f "$lock_file" ]] && locked_hosts+=( "$1.lan" )
 }
 
+restart_nameservice(){
+    passwd='rtfm4me'
+    echo "****> OOPS!  Restarting Nameservice! <****"
+    echo "$passwd" | sudo -S systemctl restart systemd-resolvd
+}
+
 arch_update(){
     passwd='rtfm4me'
     echo "$passwd" | sudo -S pacman --noconfirm -Syyu
