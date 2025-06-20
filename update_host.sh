@@ -89,7 +89,7 @@ arch_update(){
 
 deb_update(){
     passwd='rtfm4me'
-    echo "$passwd" | sudo -S apt update && sudo -S  apt dist-upgrade -y && exit
+    echo "$passwd" | sudo -S apt update && echo "$passwd" | sudo -S  apt dist-upgrade -y && exit
 }
 
 update_host(){     # Run the actual update on each host in the file
