@@ -22,7 +22,7 @@ down_hosts=()
 
 # Get the sudo user password
 echo -n 'What is your sudo user password?   '
-read passwd
+read -s passwd
 
 
 ######  Functions  ###################
@@ -49,11 +49,11 @@ host_is_up(){     # pass the hostname to check as $1
 }
 
 print_down-hosts(){
-    echo -e "\n***> There are ${#hosts[@]} up and ${#down_hosts[@]} down <***"
+    echo -e "\n***> There are ${#hosts[@]} hosts up and ${#down_hosts[@]} down <***"
     if [[ ${#down_hosts[@]} -eq 0 ]]; then
         echo -e "\n=====> No Hosts Are Down <=====\n"
     else
-        echo -e "\n===== Hosts That Are Down =====\n"
+        echo -e "\n***> Hosts That Are Down <***\n"
         for h in "${down_hosts[@]}" ; do
             echo "$h is down"
         done
