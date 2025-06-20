@@ -46,7 +46,17 @@ host_is_up(){     # pass the hostname to check as $1
     down_hosts+=( $1 )
     echo -e "\n=====> HOST: $1 is Down <======\n"
     return 1
+}
 
+print_down-hosts(){
+    if [[ ${#down_hosts[@]} -eq 0 ]]; then
+        echo -e "\n=====> No Hosts Are Down <=====\n"
+    else
+        echo -e "\n===== Hosts That Are Down =====\n"
+        for h in "${down_hosts[@]}" ; do
+            echo "$h is down"
+        done
+    fi
 }
 
 get_info(){
@@ -131,6 +141,7 @@ main(){
     identify
     update_host
     print_locked
+    print_down-hosts
 }
 
 
