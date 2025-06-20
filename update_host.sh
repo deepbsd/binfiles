@@ -49,6 +49,7 @@ host_is_up(){     # pass the hostname to check as $1
 }
 
 print_down-hosts(){
+    echo -e "\n***> There are ${#hosts[@]} up and ${#down_hosts[@]} down <***"
     if [[ ${#down_hosts[@]} -eq 0 ]]; then
         echo -e "\n=====> No Hosts Are Down <=====\n"
     else
