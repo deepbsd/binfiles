@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+echo -e "Welcome to The Tanaka Age-Based MaxHR Predictor\n\n"
 
 echo "How old are you?"
 read age
@@ -14,12 +15,13 @@ read accept
 if [[ "$accept" =~ [yY] ]] ; then 
     continue
 else
+    # if user did not accept MaxHR then newhr equals Tanaka
+    # estimate
     echo "What is your Max HR?"
     read newhr
-
+    max_hr=$newhr
 fi
 
-max_hr=$newhr
 
 
 echo "Here are your zones: "
