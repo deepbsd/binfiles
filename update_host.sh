@@ -23,7 +23,7 @@ down_hosts=()
 # Get the sudo user password
 echo -n 'What is your sudo user password?   '
 read -s passwd
-
+echo
 
 ######  Functions  ###################
 
