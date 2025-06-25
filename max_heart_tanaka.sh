@@ -16,22 +16,22 @@ factor=$(echo "0.7*$age" | bc)
 factor=${factor%.*}     # remove trailing decimal
 max_hr=$(echo -e "208-$factor" | bc)
 
-echo "Your max heart rate is $max_hr"
-echo "Do you accept this max hr?"
+echo -e "\nYour max heart rate is $max_hr\n"
+echo -e "\nDo you accept this max hr?\n"
 read accept
 if [[ "$accept" =~ [yY] ]] ; then 
     continue
 else
     # if user did not accept MaxHR then newhr equals Tanaka
     # estimate
-    echo "What is your Max HR?"
+    echo -e "\nWhat is your Max HR?\n"
     read newhr
     max_hr=$newhr
 fi
 
 
 
-echo "Here are your zones: "
+echo -e "\nHere are your zones: \n"
 Ninetypct=$(echo "scale=2; $max_hr*0.9" | bc)
 Eightypct=$(echo "scale=2; $max_hr*0.8" | bc)
 Seventypct=$(echo "scale=2; $max_hr*0.7" | bc)
