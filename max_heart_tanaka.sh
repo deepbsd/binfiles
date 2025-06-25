@@ -3,7 +3,10 @@
 clear
 echo -e "\n\n\t\t###############################################\n\t\tWelcome to The Tanaka Age-Based MaxHR Predictor\n\t\t###############################################\n\n"
 
-echo -e "\nThis script will calculate your MaxHR based on your age and then calculate your HR Zones based on that MaxHR, or give you the chance to provide your own MaxHR based on observation and then calculate HR Zones on that provided number.\n\n"
+echo -e "\tThis script will calculate your MaxHR based on your age and then"
+echo -e "\tcalculate your HR Zones based on that MaxHR, or give you the chance to"
+echo -e "\tprovide your own MaxHR based on observation and then calculate HR Zones "
+echo -e "\ton that provided number.\n\n\n\n"
 
 
 echo "How old are you?"
