@@ -2,7 +2,8 @@
 
 # NOTE:  This script updates Archlinux hosts designated
 # from hosts in a hosts_file (hosts.txt) in the users 
-# home directory
+# home directory. Actually I have PopOS hosts and various 
+# Archlinux distros in my stable.
 
 ######### Variables  ################
 
