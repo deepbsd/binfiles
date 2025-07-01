@@ -79,6 +79,8 @@ check_connectivity(){
 }
 
 restart_nameservice(){
+    # QUESTION:  If this gets triggered, does the script re-attempt to update the host after the 
+    # network interface is working again?  Need to test this.
     passwd='rtfm4me'
     echo "****> OOPS!  Restarting Nameservice! <****"
     echo "$passwd" | sudo -S systemctl restart systemd-resolvd
