@@ -17,7 +17,7 @@ show_intro(){
 get_age(){
     echo "How old are you?"
     read age
-    export $age
+    export age
 }
 
 calc_max(){
@@ -39,7 +39,7 @@ show_max(){
         echo -e "\nWhat is your Max HR?\n"
         read newhr
         max_hr=$newhr
-        export $max_hr
+        export max_hr
     fi
 }
 
