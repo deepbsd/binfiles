@@ -35,15 +35,15 @@ show_max(){
 }
 
 show_zones(){
-
+    subtitle="These Are Your HR Training Zones"
     Ninetypct=$(echo "scale=2; $max_hr*0.9" | bc)
     Eightypct=$(echo "scale=2; $max_hr*0.8" | bc)
     Seventypct=$(echo "scale=2; $max_hr*0.7" | bc)
     Sixtypct=$(echo "scale=2; $max_hr*0.6" | bc)
     Fiftypct=$(echo "scale=2; $max_hr*0.5" | bc)
 
-    output_text="Zone 5: $Ninetypct - $max_hr \nZone 4: $Eightypct - $Ninetypct \nZone 3: $Seventypct - $Eightypct \nZone 2: $Sixtypct - $Seventypct \nZone 1: $Fiftypct - $Sixtypct\n"
-    TERM=ansi whiptail --textbox /dev/stdin 20 60 <<<"$(echo -e $output_text)"
+    echo -e "\t\t$subtitle\n\n\n\t\tZone 5: $Ninetypct - $max_hr \n\t\tZone 4: $Eightypct - $Ninetypct \n\t\tZone 3: $Seventypct - $Eightypct \n\t\tZone 2: $Sixtypct - $Seventypct \n\t\tZone 1: $Fiftypct - $Sixtypct\n" > output_text
+    TERM=ansi whiptail --textbox output_text 20 60 
 
 
 
