@@ -23,14 +23,14 @@ calc_max(){
 
 
 show_max(){
-    if whiptail --title "Accept this MaxHR or Provide New MaxHR" --yesno "$max_hr or new value?" --yes-button "Accept $max_hr as MaxHR" --no-button "Provide New MaxHR" 8 78; then
-        continue
+    if whiptail --title "Accept this MaxHR or Provide New MaxHR" --yesno "Accept $max_hr as MaxHR or enter new value?" --yes-button "Accept $max_hr as MaxHR" --no-button "Provide New MaxHR" 8 78; then
+        max_hr=$max_hr
     else
         # if user did not accept MaxHR then newhr equals Tanaka
         # estimate
         newhr=$(whiptail --inputbox "What is your Observed MaxHR?" 8 39 --title "Input Observed MaxHR" 3>&1 1>&2 2>&3)
-    fi
         max_hr=$newhr
+    fi
         export max_hr
 }
 
