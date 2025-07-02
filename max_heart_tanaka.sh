@@ -42,7 +42,10 @@ show_zones(){
     Sixtypct=$(echo "scale=2; $max_hr*0.6" | bc)
     Fiftypct=$(echo "scale=2; $max_hr*0.5" | bc)
 
-    TERM=ansi whiptail --textbox /dev/stdin 20 80 <<<"$(echo -e \"Zone 5: $Ninetypct - $max_hr\" \n \"Zone 4: $Eightypct - $Ninetypct\" \n \"Zone 3: $Seventypct - $Eightypct\" \n \"Zone 2: $Sixtypct - $Seventypct\" \n \"Zone 1: $Fiftypct - $Sixtypct\")"
+    output_text="Zone 5: $Ninetypct - $max_hr \nZone 4: $Eightypct - $Ninetypct \nZone 3: $Seventypct - $Eightypct \nZone 2: $Sixtypct - $Seventypct \nZone 1: $Fiftypct - $Sixtypct\n"
+    TERM=ansi whiptail --textbox /dev/stdin 20 60 <<<"$(echo -e $output_text)"
+
+
 
 }
 
