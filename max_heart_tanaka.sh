@@ -7,7 +7,7 @@ max_hr=0
 show_intro(){
     intro_message="This script will calculate your MaxHR based on your age and then calculate your HR Zones based on that MaxHR, or you may provide your own observed MaxHR and then calculated HR Zones on that number."
 
-    TERM=ansi whiptail --title "Tanaka Method of HR Max Calculation" --msgbox "$intro_message" 13 78
+    TERM=ansi whiptail --backtitle "Welcome to My Tanaka Shell Script" --title "Tanaka Method of HR Max Calculation" --msgbox "$intro_message" 13 78
 }
 
 get_age(){
@@ -43,7 +43,7 @@ show_zones(){
     Fiftypct=$(echo "scale=2; $max_hr*0.5" | bc)
 
     echo -e "\t\t$subtitle\n\n\n\t\tZone 5: $Ninetypct - $max_hr \n\t\tZone 4: $Eightypct - $Ninetypct \n\t\tZone 3: $Seventypct - $Eightypct \n\t\tZone 2: $Sixtypct - $Seventypct \n\t\tZone 1: $Fiftypct - $Sixtypct\n" > output_text
-    TERM=ansi whiptail --textbox output_text 20 60 
+    TERM=ansi whiptail --backtitle "Showing Your HR Training Zones" --title "Your Training Zones" --textbox output_text 20 60 
 
 
 
