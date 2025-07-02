@@ -56,3 +56,16 @@ show_zones(){
     echo "Zone 2:  $Sixtypct - $Seventypct"
     echo "Zone 1:  $Fiftypct - $Sixtypct"
 }
+
+main(){
+    show_intro
+    get_age
+    calc_max
+    show_max
+    show_zones
+}
+
+
+####  MAIN  ###
+
+main
