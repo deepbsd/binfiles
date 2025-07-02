@@ -35,7 +35,7 @@ show_max(){
 }
 
 show_zones(){
-    subtitle="These Are Your HR Training Zones"
+    subtitle="These Are Your HR Training Zones:"
     Ninetypct=$(echo "scale=2; $max_hr*0.9" | bc)
     Eightypct=$(echo "scale=2; $max_hr*0.8" | bc)
     Seventypct=$(echo "scale=2; $max_hr*0.7" | bc)
