@@ -23,7 +23,7 @@ calc_max(){
 
 
 show_max(){
-    if whiptail --title "Accept this MaxHR or Provide New MaxHR" --yesno "Accept this MaxHR" "Provide New MaxHR" 8 78; then
+    if whiptail --title "Accept this MaxHR or Provide New MaxHR" --yesno "$max_hr or new value?" --yes-button "Accept $max_hr as MaxHR" --no-button "Provide New MaxHR" 8 78; then
         continue
     else
         # if user did not accept MaxHR then newhr equals Tanaka
