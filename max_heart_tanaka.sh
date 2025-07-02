@@ -11,8 +11,7 @@ show_intro(){
 }
 
 get_age(){
-    echo "How old are you?"
-    read age
+    age=$(whiptail --inputbox "How old are you?" 8 39 --title "Enter Your Age:" 3>&1 1>&2 2>&3)
     export age
 }
 
@@ -24,19 +23,15 @@ calc_max(){
 
 
 show_max(){
-    echo -e "\nYour max heart rate is $max_hr\n"
-    echo -e "\nDo you accept this max hr?\n"
-    read accept
-    if [[ "$accept" =~ [yY] ]] ; then 
+    if whiptail --title "Accept this MaxHR or Provide New MaxHR" --yesno "Accept this MaxHR" "Provide New MaxHR" 8 78; then
         continue
     else
         # if user did not accept MaxHR then newhr equals Tanaka
         # estimate
-        echo -e "\nWhat is your Max HR?\n"
-        read newhr
+        newhr=$(whiptail --inputbox "What is your Observed MaxHR?" 8 39 --title "Input Observed MaxHR" 3>&1 1>&2 2>&3)
+    fi
         max_hr=$newhr
         export max_hr
-    fi
 }
 
 show_zones(){
