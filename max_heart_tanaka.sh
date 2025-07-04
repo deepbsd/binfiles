@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-tmp_file=$HOME/tmp/output_text
 age=0
 factor=0
 max_hr=0
+tmp_file=$HOME/tmp/output_text
+
+
 
 show_intro(){
     intro_message="This script will calculate your MaxHR based on your age and then calculate your HR Zones based on that MaxHR, or you may provide your own observed MaxHR and then calculated HR Zones on that number."
