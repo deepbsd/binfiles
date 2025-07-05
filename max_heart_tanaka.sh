@@ -51,10 +51,31 @@ show_zones(){
 }
 
 main_menu(){
-    whiptail --title "Main Menu for Tanaka MaxHR and Training Zone Calculator" --menu "Your Choice?" 25 80 16 \
+    while true; do
+        menupick=$(whiptail --title "Main Menu for Tanaka MaxHR and Training Zone Calculator" --menu "Your Choice?" 25 80 16 \
         "Get Age"   "Enter the User's Age to caclulate Max HR from"  \
         "Show Max HR"  "Show Calculated MaxHR and enter different Observed Max if applicable"  \
-        "Show Zones"   "Show Training Zones calculated from provided or calculated MaxHR"  
+        "Show Zones"   "Show Training Zones calculated from provided or calculated MaxHR"  \
+        "Exit"   "Exit this program"  3>&1 1>&2 2>&3 )
+
+        exitstatus=$?
+         if [ $exitstatus -ne 0 ]; then
+             break
+         fi
+
+         case $menupick in
+             "Get Age" )
+                 get_age ;;
+             "Show Max HR" )
+                 calc_max
+                 show_max ;;
+             "Show Zones" )
+                 show_zones ;;
+             "Exit" )
+                 break 
+                 exit 0 ;;
+         esac
+     done
 }
 
 
