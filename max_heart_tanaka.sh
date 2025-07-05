@@ -16,12 +16,14 @@ show_intro(){
 get_age(){
     age=$(whiptail --inputbox "How old are you?" 8 39 --title "Enter Your Age:" 3>&1 1>&2 2>&3)
     export age
+    calc_max
 }
 
 calc_max(){
     export factor=$(echo "0.7*$age" | bc)
     export factor=${factor%.*}     # remove trailing decimal
     export max_hr=$(echo -e "208-$factor" | bc)
+    show_max
 }
 
 
@@ -34,7 +36,8 @@ show_max(){
         newhr=$(whiptail --inputbox "What is your Observed MaxHR?" 8 39 --title "Input Observed MaxHR" 3>&1 1>&2 2>&3)
         max_hr=$newhr
     fi
-        export max_hr
+    export max_hr
+    show_zones
 }
 
 show_zones(){
