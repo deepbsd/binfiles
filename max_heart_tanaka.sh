@@ -48,12 +48,19 @@ show_zones(){
     echo -e "\t\t$subtitle\n\n\n\t\tZone 5: $Ninetypct - $max_hr \n\t\tZone 4: $Eightypct - $Ninetypct \n\t\tZone 3: $Seventypct - $Eightypct \n\t\tZone 2: $Sixtypct - $Seventypct \n\t\tZone 1: $Fiftypct - $Sixtypct\n" > "$tmp_file"
     TERM=ansi whiptail --backtitle "Showing Your HR Training Zones" --title "Your Training Zones" --textbox $tmp_file 20 50 
 
-
-
 }
+
+main_menu(){
+    whiptail --title "Main Menu for Tanaka MaxHR and Training Zone Calculator" --menu "Your Choice?" 25 80 16 \
+        "Get Age"   "Enter the User's Age to caclulate Max HR from"  \
+        "Show Max HR"  "Show Calculated MaxHR and enter different Observed Max if applicable"  \
+        "Show Zones"   "Show Training Zones calculated from provided or calculated MaxHR"  
+}
+
 
 main(){
     show_intro
+    main_menu
     get_age
     calc_max
     show_max
