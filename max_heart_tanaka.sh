@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 age=0
 factor=0
 max_hr=0
@@ -53,6 +54,12 @@ show_zones(){
 
 }
 
+say_goodbye(){
+   message="Thank you for using MaxHR Tanaka!  We hope that it's been useful to learn your MaxHR and your training zones!" 
+   whiptail --backtitle "Good Bye For Now!"  --title "Thanks for using MaxHR Tanaka!" "$message" 25 80
+   exit 0
+}
+
 main_menu(){
     while true; do
         menupick=$(whiptail --title "Main Menu for Tanaka MaxHR and Training Zone Calculator" --menu "Your Choice?" 25 80 16 \
@@ -79,7 +86,7 @@ main_menu(){
              "Show Zones" )
                  show_zones ;;
              "Exit" )
-                 exit 0 ;;
+                 say_goodbye ;;
          esac
      done
 }
