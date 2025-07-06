@@ -11,7 +11,9 @@ tmp_file=$HOME/tmp/output_text
 show_intro(){
     intro_message="This script will calculate your MaxHR based on your age and then calculate your HR Zones based on that MaxHR, or you may provide your own observed MaxHR and then calculated HR Zones on that number."
 
-    TERM=ansi whiptail --backtitle "Welcome to My Tanaka Shell Script" --title "Tanaka Method of HR Max Calculation" --msgbox "$intro_message" 13 78
+    TERM=ansi whiptail --backtitle "Welcome to My Tanaka Shell Script" --title "Tanaka Method of HR Max Calculation" --msgbox "$intro_message" 10 78
+
+    main_menu
 }
 
 get_age(){
