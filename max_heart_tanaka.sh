@@ -56,7 +56,7 @@ show_zones(){
 
 say_goodbye(){
    message="Thank you for using MaxHR Tanaka!  We hope that it's been useful to learn your MaxHR and your training zones!" 
-   whiptail --backtitle "Good Bye For Now!"  --title "Thanks for using MaxHR Tanaka!" "$message" 25 80
+   whiptail --msgbox --backtitle "Good Bye For Now!"  --title "Thanks for using MaxHR Tanaka!" "$message" 10 40
    exit 0
 }
 
