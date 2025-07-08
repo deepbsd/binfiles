@@ -91,16 +91,6 @@ main_menu(){
 }
 
 
-#main(){
-#    show_intro
-#    main_menu
-#    get_age
-#    calc_max
-#    show_max
-#    show_zones
-#}
-
-
 ####  MAIN  ###
 show_intro
 main_menu
