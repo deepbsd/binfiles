@@ -123,8 +123,6 @@ EOF
             get_info
             echo "$passwd" | sudo -S pacman --noconfirm -Syyu
         fi
-
-
     done
 }
 
