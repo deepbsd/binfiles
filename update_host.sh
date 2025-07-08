@@ -135,7 +135,6 @@ print_locked(){
         echo -e "\n=== DOWN HOSTS ===\n"
         echo "${down_hosts[@]}"
     fi
-
     return 0
 }
 
