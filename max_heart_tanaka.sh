@@ -65,7 +65,6 @@ say_goodbye(){
 main_menu(){
     while true; do
         menupick=$(whiptail --title "Main Menu for Tanaka MaxHR and Training Zone Calculator" --menu "Your Choice?" 25 80 16 \
-         "Explanation"  "Explain what this program is all about"  \
         "Get Age"   "Enter the User's Age to caclulate Max HR from"  \
         "Show Max HR"  "Show Calculated MaxHR Or Observed Max if applicable"  \
         "Show Zones"   "Show Training Zones from calculated MaxHR"  \
@@ -78,8 +77,6 @@ main_menu(){
          fi
 
          case $menupick in
-             "Explanation" )
-                 show_intro ;;
              "Get Age" )
                  get_age ;;
              "Show Max HR" )
@@ -105,5 +102,5 @@ main_menu(){
 
 
 ####  MAIN  ###
-
+show_intro
 main_menu
