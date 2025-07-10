@@ -206,7 +206,7 @@ create_external_file(){
 }
 
 view_file(){
-    [[ -f "$external_file" ]] && less "$external_file"
+    ( [[ -f "$external_file" ]] && less "$external_file" ) || echo "There is no reading plan file."
 }
 
 exit_app(){
