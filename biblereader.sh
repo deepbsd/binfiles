@@ -134,7 +134,7 @@ index_of(){
 }
 
 
-###  Figure out if we're at the last chapter in the book yet
+###    Figure out if we're at the last chapter in the book yet
 ###    This function behaves truthy of falsy depending on whether it's on last book
 not_last_book(){
 
