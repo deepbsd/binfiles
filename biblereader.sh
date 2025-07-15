@@ -64,7 +64,9 @@ generate_dates(){
 
         echo >>$external_file
 
-        echo $(date -d $today +"%A %m-%d-%Y") " ====> " >>$external_file
+        ####################### OUTPUT TO SCREEN
+        #echo $(date -d $today +"%A %m-%d-%Y") " ====> " >>$external_file
+        echo $(date -d $today +"%A %m-%d-%Y") " ====> " 
         
         ## n is number of chapters to read each day
         eval chaps_per_day=$chaps_per_day
@@ -88,7 +90,9 @@ generate_dates(){
 ####  abstract out the printing of bible books and chapters
 print_books_chaps(){
     book=$1; chapter=$2
-    echo "Today read: $book chapter: $chapter"  >>$external_file
+    ##################################  OUTPUT TO SCREEN
+    #echo "Today read: $book chapter: $chapter"  >>$external_file
+    echo "Today read: $book chapter: $chapter"  
 
     # if ${chapters[$book]} is undefined, we have finished the Bible
     [ "${chapters[$book]}" -eq "${chapters[$book]}" 2>/dev/null ] || exit_app
@@ -156,7 +160,7 @@ get_chaps_per_day(){
 }
 
 delete_old_file(){
-    rm "$external_file"
+    (rm "$external_file") || echo "$external_file does not exist."
 }
 
 start_when(){
