@@ -201,7 +201,13 @@ create_external_file(){
     echo "Delete old Bible plan file?"; read yes_no
 
     ## just reuse old file if the old plan is good enough
-    [[ "$yes_no" =~ [nN] ]] && exit_app
+    if [[ "$yes_no" =~ [nN] ]] ;  then
+        if [[ -f "$external_file" ]]; then
+        exit_app
+        else
+            touch "$external_file"            
+        fi
+    fi
     if [[ -f "$external_file" ]]; then
         delete_old_file
     else
