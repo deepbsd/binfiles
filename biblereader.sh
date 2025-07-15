@@ -201,23 +201,23 @@ show_books(){
 }
 
 create_external_file(){
-    touch "$external_file"
-    echo "hey--created external file"
-    #echo "Delete old Bible plan file?"; read yes_no
+    #touch "$external_file"
+    #echo "hey--created external file"
+    echo "Delete old Bible plan file?"; read yes_no
 
     ### just reuse old file if the old plan is good enough
-    #if [[ "$yes_no" =~ [nN] ]] ;  then
-    #    if [[ -f "$external_file" ]]; then
-    #    exit_app
-    #    else
-    #        touch "$external_file"            
-    #    fi
-    #fi
-    #if [[ -f "$external_file" ]]; then
-    #    delete_old_file
-    #else
-    #    touch "$external_file"
-    #fi
+    if [[ "$yes_no" =~ [nN] ]] ;  then
+        if [[ -f "$external_file" ]]; then
+        exit_app
+        else
+            touch "$external_file"            
+        fi
+    fi
+    if [[ -f "$external_file" ]]; then
+        delete_old_file
+    else
+        touch "$external_file"
+    fi
 }
 
 view_file(){
