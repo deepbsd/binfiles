@@ -9,8 +9,8 @@ external_file="$HOME/bibleplan_in_a_year.txt"
 version="New American Bible Revised Edition (Catholic Edition)"
 
 ##  Default day when I started reading the Bible for myself most recently...
-start_date='2022-06-01'   #  YYYY-MM-DD format
-end_date='2023-08-01'
+start_date='2025-06-01'   #  YYYY-MM-DD format
+end_date='2026-08-01'
 today=$start_date   ## at first these two are equal
 
 ## Everything depends on picking a start date
@@ -62,11 +62,10 @@ generate_dates(){
         # stop if we've reached the last book
         [[ -n ${chapters[$current_book]} ]] || exit_app
 
-        echo >>$external_file
-
         ####################### OUTPUT TO SCREEN
-        #echo $(date -d $today +"%A %m-%d-%Y") " ====> " >>$external_file
-        echo $(date -d $today +"%A %m-%d-%Y") " ====> " 
+        echo >>$external_file
+        echo $(date -d $today +"%A %m-%d-%Y") " ====> " >>$external_file
+        #echo $(date -d $today +"%A %m-%d-%Y") " ====> " 
         
         ## n is number of chapters to read each day
         eval chaps_per_day=$chaps_per_day
@@ -84,15 +83,18 @@ generate_dates(){
         # update the date
         today=$(date -d"$today + 1 day" +"%Y%m%d"  )
 
+        #echo "today is $today inside generate_dates"
+
     done 
 }
 
 ####  abstract out the printing of bible books and chapters
 print_books_chaps(){
     book=$1; chapter=$2
+
     ##################################  OUTPUT TO SCREEN
-    #echo "Today read: $book chapter: $chapter"  >>$external_file
-    echo "Today read: $book chapter: $chapter"  
+    echo "Today read: $book chapter: $chapter"  >>$external_file
+    #echo "Today read: $book chapter: $chapter"  
 
     # if ${chapters[$book]} is undefined, we have finished the Bible
     [ "${chapters[$book]}" -eq "${chapters[$book]}" 2>/dev/null ] || exit_app
@@ -198,21 +200,23 @@ show_books(){
 }
 
 create_external_file(){
-    echo "Delete old Bible plan file?"; read yes_no
+    touch "$external_file"
+    echo "hey--created external file"
+    #echo "Delete old Bible plan file?"; read yes_no
 
-    ## just reuse old file if the old plan is good enough
-    if [[ "$yes_no" =~ [nN] ]] ;  then
-        if [[ -f "$external_file" ]]; then
-        exit_app
-        else
-            touch "$external_file"            
-        fi
-    fi
-    if [[ -f "$external_file" ]]; then
-        delete_old_file
-    else
-        touch "$external_file"
-    fi
+    ### just reuse old file if the old plan is good enough
+    #if [[ "$yes_no" =~ [nN] ]] ;  then
+    #    if [[ -f "$external_file" ]]; then
+    #    exit_app
+    #    else
+    #        touch "$external_file"            
+    #    fi
+    #fi
+    #if [[ -f "$external_file" ]]; then
+    #    delete_old_file
+    #else
+    #    touch "$external_file"
+    #fi
 }
 
 view_file(){
