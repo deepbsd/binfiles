@@ -10,7 +10,8 @@ version="New American Bible Revised Edition (Catholic Edition)"
 
 ##  Default day when I started reading the Bible for myself most recently...
 start_date='2025-06-01'   #  YYYY-MM-DD format
-end_date='2026-08-01'
+#end_date='2026-08-01'
+end_date=$(date -d "$start_date +1 year" +"%Y-%m-%d")
 today=$start_date   ## at first these two are equal
 
 ## Everything depends on picking a start date
