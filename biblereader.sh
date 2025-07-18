@@ -13,6 +13,7 @@ start_date='2025-06-01'   #  YYYY-MM-DD format
 #end_date='2026-08-01'
 end_date=$(date -d "$start_date +1 year" +"%Y-%m-%d")
 today=$start_date   ## at first these two are equal
+total_chapters=1334  # we need this to say whether we need more than a year
 
 ## Everything depends on picking a start date
 start=$(date -d $start_date +"%Y%m%d")
