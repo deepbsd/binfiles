@@ -24,6 +24,7 @@ end=$( date -d $end_date +"%Y%m%d")
 current_book="genesis"   # start from genesis or where you are at
 current_chapter=1        # start from genesis 1 or where you are at
 chaps_per_day=4          # overridden by user input.  Just start with something
+days_to_display=$( echo "(1334 +0.5)/$chaps_per_day" | bc )
 
 ###  Just two data structures, one array and one hash
 declare -a books=( genesis exodus leviticus numbers deuteronomy joshua judges
@@ -161,6 +162,7 @@ not_last_book(){
 
 get_chaps_per_day(){
     echo "How many chapters per day?"; read chaps_per_day
+    export days_to_display=$( echo "(1334 +0.5)/$chaps_per_day" | bc )
 }
 
 delete_old_file(){
@@ -222,7 +224,12 @@ create_external_file(){
 }
 
 view_file(){
-    ( [[ -f "$external_file" ]] && less "$external_file" ) || echo "There is no reading plan file."
+    if [[ -f "$external_file" ]]; then
+        less "$external_file" && echo "Thanks for using Biblereader!" && exit 0
+    else
+        echo "There is no reading plan file!"
+        exit 1
+    fi
 }
 
 exit_app(){
