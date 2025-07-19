@@ -225,15 +225,16 @@ create_external_file(){
 
 view_file(){
     if [[ -f "$external_file" ]]; then
-        less "$external_file" && echo "Thanks for using Biblereader!" && exit 0
+        less "$external_file" 
     else
-        echo "There is no reading plan file!"
+        echo "Error!  There is no reading plan file!"
         exit 1
     fi
 }
 
 exit_app(){
     view_file
+    echo "Thanks for using Biblereader!"
     exit 0
 }
 
